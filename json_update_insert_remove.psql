@@ -1,0 +1,169 @@
+-- สอน PostgreSQL: การเพิ่ม ลบและแก้ไขค่าใน JSON
+-- doc: https://www.postgresql.org/docs/12/functions-json.html
+-- YouTube: https://youtu.be/1OE-1YptDjc
+-- YouTube: 
+-- Author: Prasert Kanawattanachai
+-- email: prasert.k@chula.ac.th
+
+
+-- PART I.
+drop table if exists person;
+
+CREATE TABLE person (
+    id int,
+    info jsonb
+);
+
+INSERT INTO person VALUES (1, '{"age": 32, "gender": "M", "height": 1.78, "skills": {"computers": ["Word", "PowerPoint", "Excel"], "languages": [{"lang": "Korean", "level": 3}, {"lang": "Japanese", "level": 4}]}, "weight": 70, "address": {"city": "London", "postalCode": "630-0192", "streetAddress": "naist street"}, "hobbies": ["running", "swimming", "biking"], "lastName": "Bond", "firstName": "James", "phoneNumbers": [{"type": "work", "number": "07-007-8888"}, {"type": "home", "number": "0123-4567-8910"}]}');
+INSERT INTO person VALUES (2, '{"age": 31, "gender": "F", "height": 1.6, "skills": {"computers": ["Photoshop", "Linux", "Excel", "PostgreSQL"], "languages": [{"lang": "English", "level": 3}, {"lang": "Chinese", "level": 4}, {"lang": "Korean", "level": 2}, {"lang": "French", "level": 1}]}, "weight": 48, "address": {"city": "New York", "postalCode": "630-0192", "streetAddress": "1st street"}, "hobbies": ["knitting", "swimming", "reading"], "lastName": "Foster", "firstName": "Jane", "phoneNumbers": [{"type": "mobile", "number": "089-123-4567"}, {"type": "home", "number": "02-567-3399"}, {"type": "work", "number": "02-432-4455"}]}');
+INSERT INTO person VALUES (3, '{"age": 18, "gender": "M", "height": 1.65, "skills": {"computers": ["Python", "C"], "languages": [{"lang": "English", "level": 3}, {"lang": "Chinese", "level": 4}]}, "weight": 60, "address": {"city": "New York", "postalCode": "567-1122", "streetAddress": "5th Avenue"}, "hobbies": ["cooking", "swimming"], "lastName": "Parker", "firstName": "Peter", "phoneNumbers": [{"type": "mobile", "number": "055-111-5599"}, {"type": "home", "number": "02-111-2233"}]}');
+
+select * from person;
+
+select info->>'firstName' from person;
+
+-- jsonb_set() update/insert
+select jsonb_set(info, '{firstName}', '"Tony"') from person
+    where info->>'firstName'='Peter';
+
+select * from person;
+
+update person 
+    set info=jsonb_set(info, '{firstName}', '"Tony"')
+    where info->>'firstName'='Peter';
+
+select info->>'firstName', info from person;
+
+-- WRONG
+select jsonb_set(info, '{socialmedia,twitter}', '"tw_tiger"') from person;
+
+-- RIGHT
+select jsonb_build_object('twitter', 'tw_tiger');
+
+select jsonb_set(info, '{socialmedia}', jsonb_build_object('twitter', 'tw_tiger')) 
+    from person;
+
+select jsonb_set(info, '{socialmedia}', 
+    jsonb_build_object('twitter', 'tw_tiger', 'ig', 'ig_tiger')) 
+    from person;
+
+select jsonb_set(info, '{socialmedia}', 
+    jsonb_build_object('twitter', 'tw' || '_' || (info->>'firstName'), 
+                       'ig', 'ig' || '_' || (info->>'firstName')))
+    from person;
+
+update person
+    set info=jsonb_set(info, '{socialmedia}', 
+    jsonb_build_object('twitter', 'tw' || '_' || (info->>'firstName'), 
+                       'ig', 'ig' || '_' || (info->>'firstName')));
+select * from person;
+
+select info->'socialmedia',
+    jsonb_set(info, '{socialmedia,ig}', '"AAA"')
+    from person
+    where info->>'firstName'='James';
+
+select info->'socialmedia',
+    jsonb_set(info, '{socialmedia,fb}', '"fff"')
+    from person
+    where info->>'firstName'='James';
+
+update person
+    set info=jsonb_set(info, '{socialmedia,ig}', '"AAA"')
+    where info->>'firstName'='James';
+
+select info->>'firstName', info->'socialmedia' from person;
+
+-- PART II
+-- remove key and value
+select * from person;
+select info - 'gender' from person;
+select info - 'gender' - 'age' from person;
+select info - array['gender', 'age', 'phoneNumbers'] from person;
+select * from person;
+
+update person
+    set info=info - array['gender', 'age', 'phoneNumbers'];
+
+select * from person;
+
+select info->>'firstName', (info->'socialmedia') - 'ig' from person
+    where info->>'firstName'='Jane';
+
+select jsonb_set(info, '{socialmedia}', (info->'socialmedia') - 'ig')
+    from person
+    where info->>'firstName'='Jane';
+
+update person
+    set info=jsonb_set(info, '{socialmedia}', (info->'socialmedia') - 'ig')
+    where info->>'firstName'='Jane';
+
+select * from person;
+
+select info->'skills' from person;
+select (info->'skills') - 'languages' from person;
+
+select info from person;
+
+-- append array element
+select info->'hobbies', 
+    (info->'hobbies') || '"CODING"',
+    (info->'hobbies') || '["CODING", "SURFING"]'
+    from person;
+
+select  
+    (info->'skills'->'languages') || '{"lang": "THAI", "level": 5}'::jsonb
+    from person;
+
+select jsonb_set(info, '{skills,languages}', 
+    (info->'skills'->'languages') || '{"lang": "THAI", "level": 5}'::jsonb)
+    from person;
+
+select info from person;
+
+update person 
+    set info=jsonb_set(info, '{skills,languages}', 
+    (info->'skills'->'languages') || '{"lang": "THAI", "level": 5}'::jsonb)
+    where info->>'firstName'='Jane';
+
+select info->>'firstName', info->'skills'->'languages' from person;
+
+-- remove array element
+select info->'hobbies' from person;
+
+select (info->'hobbies') - 'swimming' from person;
+
+select info->'hobbies', (info->'hobbies') - 'reading' from person;
+
+select jsonb_set(info, '{hobbies}', (info->'hobbies') - 'swimming') from person;
+
+update person
+    set info=jsonb_set(info, '{hobbies}', (info->'hobbies') - 'swimming');
+
+select info->'hobbies' from person;
+
+-- array element contains a give value
+select info->'hobbies', info->'hobbies' ? 'running'
+    from person;
+
+select info->'hobbies', info->'hobbies' ? 'running'
+    from person
+    where info->'hobbies' ? 'running';
+
+-- replace array element ('running' to 'jogging')
+select info->'hobbies', (info->'hobbies') - 'running' || '"jogging"' from person
+    where info->'hobbies' ? 'running';
+
+select info->'hobbies',
+    jsonb_set(info, '{hobbies}', (info->'hobbies') - 'running' || '"jogging"')
+    from person
+    where info->'hobbies' ? 'running';
+
+update person
+    set info=jsonb_set(info, '{hobbies}', (info->'hobbies') - 'running' || '"jogging"')
+    where info->'hobbies' ? 'running';
+
+select info->'hobbies' from person;
+
+-- replace value in JSON array
+SELECT jsonb_set('[ "knitting", "swimming", "reading" ]', '{1}','"SURFING"')
