@@ -1,0 +1,7 @@
+create table province(
+	p_id varchar(3) primary key,
+	name varchar(50),
+	name_en varchar(50),
+	region varchar(2),
+	area_km2 numeric(10,2)
+);

@@ -1,0 +1,69 @@
+-- topic: CASE...END
+-- database: saturn
+-- table: province, game100
+
+-- case -> check singular value
+select name, region, area_km2,
+    case region
+        when 'C' then 'central'
+        when 'S' then 'south'
+        when 'N' then 'north'
+        when 'NE' then 'northeast'
+    end as region_text
+from province;
+
+select name, region, area_km2, 
+    case 
+        when area_km2 > 15000 then 'large'
+        when area_km2 > 7001 and area_km2 <= 15000 then 'medium'
+        when area_km2 between 1000 and 7000 then 'small'
+        else 'tiny'
+    end area_size
+    from province;
+
+with cte as (
+    select name, region, area_km2, 
+        case 
+            when area_km2 > 15000 then 'large'
+            when area_km2 > 7000 and area_km2 <= 15000 then 'medium'
+            when area_km2 between 1000 and 7000 then 'small'
+            else 'tiny'
+        end area_size
+        from province    
+)
+select area_size, count(area_size) as count 
+    from cte
+    group by area_size
+    order by count;
+
+-- table: game100
+select * from game100;
+
+-- check pattern
+select title, platform, 
+    CASE
+        when platform ilike '%playstation%' then 'Sony'
+        when platform ilike '%xbox%' then 'Microsoft'
+        when platform ilike '%wii%' or platform ilike '%nintendo%' then 'Nintendo'
+        when platform ~* 'iphone|ipad' then 'Apple'
+        else 'other'
+    end as company
+    from game100
+    order by company;
+
+-- use CASE with Common Table Expression to aggregate results
+with cte as (
+select title, platform, 
+    CASE
+        when platform ilike '%playstation%' then 'Sony'
+        when platform ilike '%xbox%' then 'Microsoft'
+        when platform ilike '%wii%' or platform ilike '%nintendo%' then 'Nintendo'
+        when platform ~* 'iphone|ipad' then 'Apple'
+        else 'other'
+    end as company
+    from game100    
+)
+select company, count(company) as count 
+    from cte 
+    group by company
+    order by count desc;

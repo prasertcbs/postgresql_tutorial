@@ -1,0 +1,31 @@
+-- database: saturn
+-- table: province
+
+select * from province limit 5;
+
+select avg(area_km2) from province;
+
+-- province area larger than average
+select * from province where area_km2 > 6671.926;
+
+select * from province where area_km2 > (select avg(area_km2) from province);
+
+select name, (select avg(area_km2) as "avg_area" from province) 
+    from province limit 5;
+
+select name, area_km2, (select avg(area_km2)from province) as "avg_area" 
+    from province
+    where area_km2 > (select avg(area_km2) from province);
+
+select name, area_km2, area_km2 - (select avg(area_km2) from province) as "above_avg"
+    from province
+    where area_km2 > (select avg(area_km2) from province);
+
+select sum(area_km2) from province;
+
+-- each province area as % total area
+select name, 100 * area_km2 / (select sum(area_km2) from province) from province;
+
+select name, (100 * area_km2 / (select sum(area_km2) from province))::numeric(5,2) 
+    from province 
+    order by area_km2 desc;

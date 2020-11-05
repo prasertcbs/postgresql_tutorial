@@ -1,0 +1,54 @@
+-- table inheritance
+
+-- employee
+--  * fulltime
+--  * parttime
+
+create table employee (
+    id serial primary key,
+    fname text,
+    lname text
+);
+
+create table fulltime (
+    join_date date,
+    salary int
+) inherits (employee);
+
+insert into fulltime (fname, lname, join_date, salary) values 
+    ('Peter', 'Parker', '2015-06-23', 50000),
+    ('Lisa', 'Smith', '2018-10-21', 70000);
+
+select * from fulltime;
+select * from employee;
+
+create table parttime (
+    wage int -- per hour
+) inherits (employee);
+
+insert into parttime (fname, lname, wage) values 
+    ('Bruce', 'Wayne', 100),
+    ('Ann', 'Young', 120);
+
+select * from parttime;
+select * from employee;
+
+insert into employee(fname, lname) values ('Clark', 'Kent');
+select * from employee;
+
+alter table employee add column gender char(1);
+alter table employee add column dob date;
+
+select * from fulltime;
+
+update fulltime set gender = 'm' where fname='Peter';
+select * from fulltime;
+
+select * from employee;
+update employee set gender = 'f' where fname in ('Lisa', 'Ann');
+select * from employee;
+select * from fulltime;
+
+alter table employee rename column gender to sex;
+select * from fulltime;
+select * from parttime;

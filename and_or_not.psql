@@ -1,0 +1,33 @@
+select * from benjerry limit 10;
+
+select * from benjerry
+    where flavor ilike '%cookie%' or flavor ilike '%chocolate%';
+
+select * from benjerry
+    where flavor ilike '%cookie%' and flavor ilike '%chocolate%';
+
+select * from benjerry where calories < 250;
+select * from benjerry where calories < 250 and flavor not ilike '%chocolate%';
+select * from benjerry where (calories < 250) and (flavor not ilike '%chocolate%');
+select * from benjerry where (calories < 250) and (flavor ilike '%chocolate%');
+
+select * from benjerry where (calories < 250) and (sugars_g < 25);
+select * from benjerry where calories < 250 and sugars_g < 25;
+select * from benjerry where calories < 250 and sugars_g < 25 and fat_g < 5;
+
+-- <, >, <=, >=, not, and, or
+select * from benjerry where (calories < 250 and sugars_g < 25) or flavor ilike '%chocolate%';
+select * from benjerry where calories < 250 and (sugars_g < 25 or flavor ilike '%chocolate%');
+
+-- in
+select * from benjerry where fat_g = 2 or fat_g = 6 or fat_g =7;
+select * from benjerry where fat_g in (2, 6, 7);
+select * from benjerry where flavor in ('Chocolate', 'Vanilla', 'Banana Split');
+select * from benjerry where flavor = 'Chocolate' or flavor = 'Vanilla' or flavor='Banana Split';
+
+-- between
+select * from benjerry;
+select * from benjerry where sugars_g >= 21 and sugars_g <= 25;
+select * from benjerry where sugars_g between 21 and 25;
+select * from benjerry where (sugars_g between 21 and 25) and calories <= 200; 
+

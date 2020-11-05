@@ -1,0 +1,39 @@
+-- basic regex in where clause
+select * from benjerry;
+
+select * from benjerry where flavor ilike '%banana%';
+
+-- contains ~ (case sensitive)
+select * from benjerry where flavor ~ 'banana';
+
+-- contains ~* (case insensitive)
+select * from benjerry where flavor ~* 'banana';
+select * from benjerry where flavor ~* 'chocolate';
+
+-- begins with ^ 
+select * from benjerry where flavor ~* '^chocolate';
+
+-- contains 'fudge'
+select * from benjerry where flavor ~* 'fudge'; -- contains
+
+-- ends with $
+select * from benjerry where flavor ~* 'fudge$'; -- ends with
+
+-- chocolate or fudge or cookie
+select * from benjerry where flavor ~* 'chocolate|fudge|cookie'; 
+
+-- both chocolate and fudge
+select * from benjerry where flavor ~* 'chocolate.*fudge|fudge.*chocolate'; 
+
+-- using lookahead
+select * from benjerry where flavor ~* '(?=.*chocolate)(?=.*fudge)'; 
+select * from benjerry where flavor ~* '(?=.*fudge)(?=.*chocolate)'; 
+
+-- contains 'cake'
+select * from benjerry where flavor ~* 'cake'; 
+
+-- word boundary: \ycake\y not cheesecake, shortcake
+select * from benjerry where flavor ~* '\ycake\y'; -- \y word boundary 
+
+
+

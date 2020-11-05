@@ -1,0 +1,28 @@
+-- database name: saturn
+-- table name: drink
+update drink set price = price + 2;
+update drink set name = 'diet coke' 
+    where name = 'coke';
+    
+update drink set name = 'mineral water'
+    where product_id = 63;
+    
+update drink set price = price - 2
+    where name ilike '%tea%';
+    
+update drink set is_recommend = false
+    where is_recommend is null;
+    
+update drink set name = initcap(name);
+update drink set name = lower(name);
+update drink set name = upper(name);
+update drink set name = 'coke' 
+    where name = 'DIET COKE';   
+    
+update drink set name = 'Pepsi Max'
+    where lower(name) = 'pepsi';
+    
+update drink set price = price - 10
+    where name ilike '%tea%' and
+    price > 50;
+

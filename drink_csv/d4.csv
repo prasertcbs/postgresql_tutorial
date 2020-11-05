@@ -1,0 +1,14 @@
+product_id|name|price|is_recommend
+3|latte|60.00|t
+7|null|45.00|f
+1|espresso|50.00|null
+5|green tea|80.00|t
+6|black tea|50.00|f
+63|water|10.00|null
+4|fanta|20.00|f
+40|pepsi|20.00|t
+41|7-up|20.00|null
+42|milk|60.00|t
+43|honey tea|70.00|null
+44|jasmine tea|50.00|f
+2|null|20.00|null

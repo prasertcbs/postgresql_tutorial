@@ -1,0 +1,39 @@
+-- database: saturn
+
+create table fruit(
+    id serial primary key,
+    name varchar(50),
+    price int
+);
+
+insert into fruit(name, price) values ('coconut', 15);
+
+select * from fruit;
+
+insert into fruit(name, price) values ('mango', 20),
+('papaya', 25),
+('water melon', 40);
+
+select * from fruit;
+
+delete from fruit;
+
+select * from fruit;
+
+insert into fruit(name, price) values ('coconut', 15);
+
+select * from fruit;
+
+truncate table fruit restart identity;
+
+select * from fruit;
+
+insert into fruit(name, price) values ('coconut', 15);
+
+select * from fruit;
+
+insert into fruit(name, price) values ('mango', 20),
+('papaya', 25),
+('water melon', 40);
+
+select * from fruit;

@@ -1,0 +1,35 @@
+-- topic: calculated column, concatenate columns
+-- database: saturn
+-- table: employee
+
+select * from employee;
+
+select fname, weight_kg, weight_kg * 2.2 as weight_lbs from employee;
+
+select fname, 
+    (weight_kg / height_m ^2) as bmi, 
+    (weight_kg / height_m ^2)::numeric(4, 2) as bmi2,
+    round(weight_kg / height_m ^2, 2) as bmi3
+    from employee;
+
+select * from employee;
+
+select fname || ' ' || lname as fullname from employee;
+select lname || ', ' || fname as fullname from employee;
+
+select 
+    case gender
+        when 'm' then 'Mr.'
+        when 'f' then 'Ms.'
+    end || ' ' || 
+    fname || ' ' || lname as fullname from employee;
+
+select * from employee;
+
+-- default date interval format -> ISO 8601
+-- change vscode-postgres.intervalFormat
+-- goto Settings (Ctrl + ,) 
+-- "vscode-postgres.intervalFormat": "iso_8601"
+-- "vscode-postgres.intervalFormat": "humanize"
+select fname, age(dob) from employee;
+

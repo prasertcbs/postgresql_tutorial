@@ -1,0 +1,27 @@
+-- database: saturn
+
+select * from province;
+select * from province order by name;
+
+-- specify collate in order by
+select * from province order by name collate "th-x-icu";
+
+-- alter 'name' column by adding collate
+alter table province alter column name type text collate "th-x-icu";
+
+-- reset 'name' column collation
+alter table province alter column name type text collate pg_catalog.default;
+
+-- add name_th column with collation
+alter table province add column name_th text collate "th-x-icu";
+
+update province set name_th = name;
+
+select * from province order by name_th;
+
+-- list collation contains 'th'
+select * from pg_collation where collname ilike '%th%';
+
+-- create column with collation
+create table person(id int, name_th text collate "th-x-icu");
+insert into person(id, name_th) values (1, 'สมชาย'), (2, 'สามารถ');

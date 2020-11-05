@@ -1,0 +1,26 @@
+-- database: saturn
+
+-- create test data table
+drop table if exists cafe;
+select * into cafe from drink;
+
+-- demo how select distinct works
+SELECT * from cafe;
+
+select name from cafe;
+
+select distinct name from cafe;
+SELECT * from cafe;
+
+select distinct name, price from cafe;
+
+update cafe set price = 10 where product_id = 7;
+
+SELECT * from cafe;
+
+select distinct name, price from cafe;
+
+-- table: ign
+select distinct platform from ign;
+
+select distinct title from ign;

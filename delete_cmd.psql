@@ -1,0 +1,17 @@
+-- database name: saturn
+-- table name: drink
+
+delete from drink 
+	where name = '7-up';
+
+delete from drink
+	where upper(name) = 'LATTE';
+	
+delete from drink
+	where name ilike '%Tea%';
+	
+delete from drink
+	where price > 50;
+	
+delete from drink
+	where price >=20 and price <= 50;

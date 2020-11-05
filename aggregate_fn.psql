@@ -1,0 +1,25 @@
+-- database: saturn
+-- table: game (16719 rows)
+
+select count(*) from game;
+
+select count(*) as "# counts" from game;
+
+select sum(global_sales) as "# sales" from game;
+
+select count(*) as "# counts", 
+    sum(global_sales) as "# sales", 
+    avg(global_sales) as "avg. sales",
+    min(global_sales) as "min sales",
+    max(global_sales) as "max sales" 
+    from game;
+
+select platform, count(*) as "# counts", 
+    sum(global_sales) as "# sales", 
+    avg(global_sales) as "avg. sales",
+    min(global_sales) as "min sales",
+    max(global_sales) as "max sales" 
+    from game
+    group by platform
+    having count(*) > 1000
+    order by sum(global_sales) desc;

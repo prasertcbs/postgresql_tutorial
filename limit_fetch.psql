@@ -1,0 +1,18 @@
+-- database: saturn
+
+select * from province;
+
+select * from province
+    limit 10;
+
+select * from province
+    order by area_km2 desc
+    limit 10;
+
+select * from province
+    order by area_km2 desc
+    fetch first 10 rows only;
+
+select * from province
+    order by area_km2 desc
+    offset 5 rows fetch first 3 rows only;

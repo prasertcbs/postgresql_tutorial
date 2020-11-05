@@ -1,0 +1,22 @@
+select * from game_bool;
+
+alter table game_bool add column fav boolean; 
+select * from game_bool;
+
+-- 'yes', 'y', 't', 'true', '1'
+-- 'no', 'n', 'f', 'false', '0'
+update game_bool 
+    set fav = 'yes' where editors_choice = 'Y';
+select * from game_bool;
+
+update game_bool 
+    set fav = 'f' where editors_choice = 'N';
+select * from game_bool;
+
+update game_bool 
+    set fav = '0' where platform='Macintosh';
+select * from game_bool;
+
+update game_bool 
+    set fav = null where platform='PC';
+select * from game_bool;

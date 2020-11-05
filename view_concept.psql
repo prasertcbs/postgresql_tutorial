@@ -1,0 +1,73 @@
+-- simple view from a single table
+-- \c demo
+-- \dv
+-- \d+ vw_low_calories
+
+-- housekeeping
+alter table benjerry drop column calories_group;
+
+drop view if exists vw_low_calories;
+drop view if exists vw_basic_flavor;
+drop view if exists vw_calories;
+drop view if exists vw_yogurt;
+
+
+-- demo section
+select * from benjerry;
+
+select * from benjerry where calories < 200;
+
+-- ex 1.
+create view vw_low_calories as
+    select * from benjerry where calories < 200;
+
+select * from vw_low_calories;
+
+drop view vw_low_calories;
+
+create view vw_low_calories as
+    select flavor, calories from benjerry where calories < 200;
+
+select * from vw_low_calories;
+
+-- ex 2.
+select * from benjerry where flavor ilike '%chocolate%' or flavor ilike '%strawberry%';
+
+create view vw_basic_flavor as
+    select * from benjerry where flavor ilike '%chocolate%' or flavor ilike '%strawberry%';
+
+select * from vw_basic_flavor;
+select flavor, calories from vw_basic_flavor where calories < 200;
+
+create or replace view vw_basic_flavor as
+    select * from benjerry where flavor ilike '%chocolate%' or flavor ilike '%strawberry%' or flavor ilike '%Vanilla%';
+
+select * from vw_basic_flavor;
+
+-- ex 3.
+SELECT *,
+    case
+        when calories >= 280 then 'rich'
+        when calories >= 200 then 'medium'
+        else 'light'
+    end as calories_group
+    from benjerry;
+
+CREATE view vw_calories as 
+    SELECT *,
+        case
+            when calories >= 280 then 'rich'
+            when calories >= 200 then 'medium'
+            else 'light'
+        end as calories_group
+        from benjerry;
+
+select * from vw_calories where calories_group = 'light';
+
+select * from benjerry where flavor ilike '%Yogurt%';
+
+-- ex 4.
+create view vw_yogurt as
+    select * from benjerry where flavor ilike '%Yogurt%';
+
+select * from vw_yogurt;

@@ -1,0 +1,32 @@
+select * from benjerry limit 10;
+
+select * from benjerry 
+    where flavor like '%Chocolate%'; -- contains
+
+select * from benjerry 
+    where flavor like '%chocolate%'; -- case sensitive
+
+select * from benjerry 
+    where flavor ilike '%chocolate%'; -- case insensitive
+
+select * from benjerry 
+    where flavor ilike 'B%'; -- begins with
+
+select * from benjerry 
+    where flavor ilike '%Ba%'; -- contains Ba (case insensitive)
+
+-- contains either chocolate or banana
+select * from benjerry 
+    where flavor ilike '%chocolate%' or flavor ilike '%banana%';
+
+-- contains either yogurt or banana
+select * from benjerry 
+    where flavor ilike '%yogurt%' or flavor ilike '%banana%';
+
+-- contains both yogurt and banana
+select * from benjerry 
+    where flavor ilike '%yogurt%' and flavor ilike '%banana%';
+
+-- not contains banana
+select * from benjerry 
+    where flavor not ilike '%banana%';

@@ -1,0 +1,33 @@
+-- เข้าใจเรื่องวันและเวลาแบบเบื้องต้นของ PostgreSQL
+-- YouTube: https://youtu.be/UFCnhnOs7nA
+
+-- วันเวลาปัจจุบัน
+select current_date, current_time, localtimestamp, now();
+
+-- คำนวณหาอายุว่าเป็นกี่ปี กี่เดือน กับอีกกี่วัน
+select age('2000-07-11'::timestamp);
+select age(timestamp '2000-07-11');
+
+-- การบวกวัน
+select current_date, current_date + 5;
+
+-- การใช้ interval แบบต่าง ๆ
+select LOCALTIMESTAMP, LOCALTIMESTAMP + '5 days'::interval;
+select LOCALTIMESTAMP, LOCALTIMESTAMP - '5 days'::interval;
+select LOCALTIMESTAMP, LOCALTIMESTAMP - '5 months'::interval;
+select LOCALTIMESTAMP, LOCALTIMESTAMP + '1 year'::interval;
+select LOCALTIMESTAMP, LOCALTIMESTAMP + '2 hours'::interval;
+select LOCALTIMESTAMP, LOCALTIMESTAMP + '12 minutes'::interval;
+select LOCALTIMESTAMP, LOCALTIMESTAMP + '2 hours 12 minutes'::interval;
+
+-- การสร้างวันเวลา
+select make_date(2019, 9, 10), make_time(14, 17, 30), make_timestamp(2019, 9, 10, 14, 17, 30);
+
+-- การหาผลต่างของวัน
+select '2019-09-20 14:30'::timestamp - '2019-09-15 16:45'::timestamp;
+
+-- การดึงส่วนต่าง ๆ ของ interval
+select '2019-09-20 14:30'::timestamp - '2019-09-15 16:45'::timestamp,
+    extract(day from '2019-09-20 14:30'::timestamp - '2019-09-15 16:45'::timestamp),
+    extract(hour from '2019-09-20 14:30'::timestamp - '2019-09-15 16:45'::timestamp),
+    extract(minute from '2019-09-20 14:30'::timestamp - '2019-09-15 16:45'::timestamp)

@@ -1,0 +1,26 @@
+-- chinook database
+
+select billing_country, total
+	from invoice;
+	
+select billing_country, sum(total) as "billing total"
+	from invoice
+	group by billing_country;
+	
+select billing_country, sum(total) as "billing total"
+	from invoice
+	group by billing_country
+	order by billing_country;
+
+select billing_country, sum(total) as "billing total"
+	from invoice
+	group by billing_country
+	order by sum(total) desc
+	limit 5;
+	
+select billing_country, sum(total) as "billing total"
+	from invoice
+	group by billing_country
+	having sum(total) > 100 and sum(total) < 300
+	order by sum(total) desc
+	limit 5;

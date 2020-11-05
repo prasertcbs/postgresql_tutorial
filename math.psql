@@ -1,0 +1,45 @@
+-- math operators
+select 7+3;
+select 7-3;
+select 7*3; -- multiply
+select 7/3; -- integer division (int/int = int)
+select 7.0/3; -- real/int = real
+select 7::real/3;
+select 7%3; -- integer division
+select 2019%4;
+select 2020%4; -- mod or remainder
+select 2^3; -- power
+select 5!; -- factorial
+select |/2; -- square root
+select @(-3); -- absolute
+
+-- create basic_math table
+drop table if exists basic_math;
+
+create table basic_math (
+    a int,
+    b int,
+    c int
+);
+
+-- insert simple test data
+insert into basic_math values (7, 3, -5);
+
+select * from basic_math;
+
+-- basic operators: + - * /
+-- int division, % remainder (mod), ^ power, |/ square root, !, factorial, @ absolute 
+select a + b, a - b, a * b, a / b, a::real / b from basic_math;
+
+-- ^, *, /, +, -
+select 7 - 3 * 2 + 5 / 10.0;
+select 7 - (3 * 2) + (5 / 10.0);
+select 7 - 6 + .5;
+
+
+-- employee table (calc bmi)
+select * from employee;
+
+select fname, weight_kg / height_m ^ 2 from employee;
+select fname, weight_kg / (height_m ^ 2) as "bmi" from employee;
+select fname, (weight_kg / (height_m ^ 2))::numeric(5,2) as "bmi" from employee;

@@ -1,0 +1,31 @@
+-- database: saturn
+
+-- union
+select name from game 
+	where platform = 'XOne' and 
+		genre = 'Fighting’
+union
+select name from game 
+	where platform = 'PS4' and 
+	genre = 'Fighting'
+order by name;
+
+-- intersect
+select name from game 
+	where platform = 'XOne' and 
+		genre = 'Fighting'
+intersect
+select name from game 
+	where platform = 'PS4' and 
+	genre = 'Fighting'
+order by name;
+
+-- except
+select name from game 
+	where platform = 'XOne' and 
+		genre = 'Fighting’
+except
+select name from game 
+	where platform = 'PS4' and 
+	genre = 'Fighting'
+order by name;

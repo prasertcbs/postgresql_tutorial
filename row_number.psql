@@ -1,0 +1,24 @@
+select * from province_info;
+
+-- window function 
+select row_number() over (order by area_km2) row_num,
+* from province_info;
+
+select row_number() over (order by area_km2 desc) row_num,
+* from province_info;
+
+-- Split-Apply-Combine
+select row_number() over (partition by region order by area_km2 desc) row_num,
+* from province_info;
+
+select row_number() over (partition by substr(abbr, 1, 1) order by area_km2 desc) row_num,
+* from province_info;
+
+select row_number() over (partition by region, substr(abbr, 1, 1) order by area_km2 desc) row_num,
+* from province_info;
+
+select row_number() over (partition by region, substr(abbr, 1, 1) order by region, abbr desc) row_num,
+* from province_info;
+
+
+

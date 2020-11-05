@@ -1,0 +1,24 @@
+-- database: saturn
+-- table: province
+-- topic: table/query results to XML
+
+select * from province;
+
+select table_to_xml('province', true, false, '');
+
+select query_to_xml('select p_id, name from province', true, false, '');
+
+-- need to put E (Escape) in front of select command text
+select query_to_xml(E'select p_id, name from province where region=\'S\'', true, false, '');
+
+select query_to_xml(E'select p_id, name, area_km2 from province where area_km2 > 15000', true, false, '');
+
+-- each line ends with '\n'
+copy (
+    select query_to_xml(E'select p_id, name, area_km2 from province where area_km2 > 15000', true, false, '')
+) to 'c:/temp/pv.xml';
+
+-- whole results were enclosed with double quote
+copy (
+    select query_to_xml(E'select p_id, name, area_km2 from province where area_km2 > 15000', true, false, '')
+) to 'c:/temp/pv2.xml' csv;

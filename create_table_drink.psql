@@ -1,0 +1,9 @@
+CREATE TABLE drink
+(
+    product_id integer NOT NULL,
+    name character varying(100),
+    price numeric(8,2),
+    is_recommend boolean
+);
+
+"C:\\Program Files\\PostgreSQL\\10\\bin\\psql.exe" --command " "\\copy public.drink2 (product_id, name, price, is_recommend) FROM 'C:/temp/drink.csv' CSV HEADER ENCODING 'UTF8' QUOTE '\"' ESCAPE '''';""

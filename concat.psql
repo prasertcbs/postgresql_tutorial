@@ -1,0 +1,31 @@
+-- PostgreSQL
+-- database: venus
+
+-- table: customer
+/*
+insert into customer(customer_id, fname, lname) values 
+    (1, 'Clark', 'Kent'), 
+    (2, 'Bruce', 'Wayne'), 
+    (3, 'Natasha', 'Romanoff');
+*/
+
+select customer_id, fname, lname 
+    rom customer;
+
+select customer_id, fname || ' ' || lname as full_name 
+    from customer;
+
+select fname || ' ' || lname
+	from customer
+	order by customer_id;
+
+-- table: province
+select name || ' (' || area_km2 || ')'
+	from province;
+	
+select name || ' (' || to_char(area_km2, '999,999.99') || 'km2)'
+	from province;
+	
+select name || to_char(area_km2, '" ("999,999.99" km2)"')
+	from province;
+

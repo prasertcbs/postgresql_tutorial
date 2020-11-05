@@ -1,0 +1,50 @@
+-- topic: create scalar function
+-- database: saturn
+-- table: employee
+
+drop function if exists bmi;
+drop function if exists rectangle;
+drop function if exists square;
+drop function if exists cyliinder;
+
+select *, weight_kg / (height_m ^ 2) bmi from employee;
+
+create or replace function bmi(h real, w real) returns real language 'plpgsql' as $$
+begin
+    return w / (h * h);
+end;
+$$
+
+select bmi(1.7, 70);
+select *, bmi(height_m, weight_kg) body_mass_index from employee;
+select name, weight_kg, height_m, bmi(height_m, weight_kg) body_mass_index from employee;
+
+drop function if exsits bmi;
+
+create or replace function rectangle(h real, w real) returns real language 'plpgsql' as $$
+begin
+    return w * h;
+end;
+$$
+
+select rectangle(5, 10);
+
+-- Note: this square() function calls rectangle() function
+create or replace function square(s real) returns real language 'plpgsql' as $$
+begin
+    return rectangle(s, s);
+end;
+$$
+
+select square(5);
+
+-- how to declare variable inside function
+create or replace function cylinder(r real, h real) returns real language 'plpgsql' as $$
+declare circle_area real;
+begin
+    circle_area := pi() * r ^ 2;
+    return circle_area * h;
+end;
+$$
+
+select cylinder(1, 10);

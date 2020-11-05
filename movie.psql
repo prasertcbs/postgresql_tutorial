@@ -1,0 +1,58 @@
+CREATE TABLE movie(
+	movie_id int primary key,
+	movie_title varchar(255),
+	title_year int,
+	duration int,
+	content_rating varchar(255),
+	budget numeric(12,0),
+	gross numeric(12,0),
+	genres varchar(255),
+	imdb_score real,
+	director_name varchar(255),
+	actor_1_name varchar(255),
+	actor_2_name varchar(255),
+	actor_3_name varchar(255),
+	country varchar(255)
+);
+
+-- genres to array
+select movie_id, genres, string_to_array(genres, '|') 
+	from movie limit 5;
+
+alter table movie
+	add column genres2 varchar(50)[];
+
+update movie
+	set genres2 = string_to_array(genres, '|');
+
+select movie_id, genres, genres2 from movie;
+
+-- create array from 3 columns
+select movie_id, actor_1_name, actor_2_name, actor_3_name from movie limit 5;
+
+select array[actor_1_name, actor_2_name, actor_3_name] from movie limit 5;
+
+alter table movie
+	add column actors varchar(50)[];
+
+update movie
+	set actors = array[actor_1_name, actor_2_name, actor_3_name];
+
+select movie_title, actors from movie limit 5;
+
+-- search actors
+select movie_title, actors from movie where 'Johnny Depp' = any(actors);
+
+select movie_title, actors from movie
+	where array_to_string(actors, '|') ilike '%Depp%';
+
+select movie_title, actors from movie
+	where array_to_string(actors, '|') ilike '%Emma%';
+
+-- ~* matches regex case insensitive
+select movie_title, actors from movie
+	where array_to_string(actors, '|') ~* 'Emma|Johnny';
+
+-- !~* Does not match regular expression, case insensitive 	
+select movie_title, actors from movie
+	where array_to_string(actors, '|') !~* 'Emma|Johnny';

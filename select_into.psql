@@ -1,0 +1,17 @@
+-- database: mercury
+
+select p_id, name 
+	into abbr
+	from province;
+
+select region, count(*) "# provinces", sum(area_km2) as area
+	into province_info
+	from province
+	group by region;
+
+select * 
+	into buri
+	from province
+	where name like '%บุรี%';
+
+    

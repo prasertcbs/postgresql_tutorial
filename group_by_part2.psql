@@ -1,0 +1,20 @@
+-- chinook database
+-- top 5 customers
+select customer_id, sum(total) as billing_total
+	from invoice
+	group by customer_id
+	order by billing_total desc
+	limit 5;
+
+-- top 5 customers with first_name
+select customer_id, first_name, sum(total) as billing_total
+	from invoice inner join customer using (customer_id)
+	group by customer_id, first_name
+	order by billing_total desc
+	limit 5;
+    
+-- top tracks
+select b.name, sum(quantity), sum(a.unit_price * quantity)
+	from invoice_line a inner join track b using(track_id)
+	group by b.name
+	order by sum(quantity) desc

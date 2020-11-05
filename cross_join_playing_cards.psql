@@ -1,0 +1,25 @@
+-- database: saturn
+
+create table suits(
+    suit varchar(10)
+);
+
+insert into suits values ('spade'), ('heart'), ('diamond'), ('club');
+
+create table ranks(
+    r varchar(2)
+);
+
+insert into ranks values ('A'), ('2'), ('3'), ('4'), ('5'), ('6'), ('7'), ('8'), ('9'), ('10'), ('J'), ('Q'), ('K');
+
+
+select r, suit from ranks cross join suits;
+
+select r, suit from ranks, suits;
+
+select r || '-' || suit as card 
+    from ranks, suits;
+
+select r || '-' || suit as card 
+    into playing_cards
+    from ranks, suits;

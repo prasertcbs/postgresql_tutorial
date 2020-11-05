@@ -1,0 +1,23 @@
+select * from benjerry;
+
+select * from benjerry order by calories; -- ascending order
+select * from benjerry order by calories desc; -- descending order
+
+
+select * from benjerry order by flavor; 
+select * from benjerry order by flavor desc; 
+
+-- order by multiple columns
+select * from benjerry order by calories, fat_g;
+select * from benjerry order by calories, fat_g desc, protein_g asc;
+
+-- order by calculated column 
+-- warning: int / int = int 
+select flavor, sugars_g, carbs_g, sugars_g/carbs_g as sc_ratio from benjerry;
+
+select flavor, sugars_g, carbs_g, sugars_g * 1.0/carbs_g as sc_ratio from benjerry;
+
+select flavor, sugars_g, carbs_g, (sugars_g::real/carbs_g) as sc_ratio from benjerry;
+
+select flavor, sugars_g, carbs_g, (sugars_g::real/carbs_g) as sc_ratio from benjerry
+    order by sc_ratio desc;

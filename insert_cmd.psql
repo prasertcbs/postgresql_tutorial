@@ -1,0 +1,16 @@
+-- database name: saturn
+-- table name: drink
+
+insert into drink 
+	values(2, 'latte', 50, false);
+	
+insert into drink(product_id, name, price, is_recommend) 
+	values(3, 'espresso', 40, null);
+	
+insert into drink(product_id, price, name)
+	values(4, 99, 'smoothie');
+	
+insert into drink(product_id, name, price, is_recommend) 
+	values(30, 'green tea', 40, true), 
+		   (31, 'jasmine tea', 45, false),
+		   (32, 'honey tea', 50, null);

@@ -1,0 +1,51 @@
+movie_id,movie_title,title_year,duration,content_rating,budget,gross,genres,imdb_score,director_name,actor_1_name,actor_2_name,actor_3_name,country
+1,John Carter,2012,132,PG-13,263700000,73058679,Action|Adventure|Sci-Fi,6.6,Andrew Stanton,Daryl Sabara,Samantha Morton,Polly Walker,USA
+2,Spider-Man 3,2007,156,PG-13,258000000,336530303,Action|Adventure|Romance,6.2,Sam Raimi,J.K. Simmons,James Franco,Kirsten Dunst,USA
+3,Batman v Superman: Dawn of Justice,2016,183,PG-13,250000000,330249062,Action|Adventure|Sci-Fi,6.9,Zack Snyder,Henry Cavill,Lauren Cohan,Alan D. Purwin,USA
+4,Pirates of the Caribbean: On Stranger Tides,2011,136,PG-13,250000000,241063875,Action|Adventure|Fantasy,6.7,Rob Marshall,Johnny Depp,Sam Claflin,Stephen Graham,USA
+5,Spectre,2015,148,PG-13,245000000,200074175,Action|Adventure|Thriller,6.8,Sam Mendes,Christoph Waltz,Rory Kinnear,Stephanie Sigman,UK
+6,The Amazing Spider-Man,2012,153,PG-13,230000000,262030663,Action|Adventure|Fantasy,7,Marc Webb,Emma Stone,Andrew Garfield,Chris Zylka,USA
+7,Men in Black 3,2012,106,PG-13,225000000,179020854,Action|Adventure|Comedy|Family|Fantasy|Sci-Fi,6.8,Barry Sonnenfeld,Will Smith,Michael Stuhlbarg,Nicole Scherzinger,USA
+8,The Chronicles of Narnia: Prince Caspian,2008,150,PG,225000000,141614023,Action|Adventure|Family|Fantasy,6.6,Andrew Adamson,Peter Dinklage,Pierfrancesco Favino,Damin Alczar,USA
+9,Oz the Great and Powerful,2013,130,PG,215000000,234903076,Adventure|Family|Fantasy,6.4,Sam Raimi,Tim Holmes,Mila Kunis,James Franco,USA
+10,The Lone Ranger,2013,150,PG-13,215000000,89289910,Action|Adventure|Western,6.5,Gore Verbinski,Johnny Depp,Ruth Wilson,Tom Wilkinson,USA
+11,Transformers: Age of Extinction,2014,165,PG-13,210000000,245428137,Action|Adventure|Sci-Fi,5.7,Michael Bay,Bingbing Li,Sophia Myles,Kelsey Grammer,USA
+12,X-Men: The Last Stand,2006,104,PG-13,210000000,234360014,Action|Adventure|Fantasy|Sci-Fi|Thriller,6.8,Brett Ratner,Hugh Jackman,Kelsey Grammer,Daniel Cudmore,Canada
+13,Battleship,2012,131,PG-13,209000000,65173160,Action|Adventure|Sci-Fi|Thriller,5.9,Peter Berg,Liam Neeson,Alexander Skarsg?�rd,Tadanobu Asano,USA
+14,Superman Returns,2006,169,PG-13,209000000,200069408,Action|Adventure|Sci-Fi,6.1,Bryan Singer,Kevin Spacey,Marlon Brando,Frank Langella,USA
+15,2012,2009,158,PG-13,200000000,166112167,Action|Adventure|Sci-Fi,5.8,Roland Emmerich,Oliver Platt,Liam James,Tom McCarthy,USA
+16,A Christmas Carol,2009,96,PG,200000000,137850096,Animation|Drama|Family|Fantasy,6.8,Robert Zemeckis,Robin Wright,Colin Firth,Gary Oldman,USA
+17,Alice in Wonderland,2010,108,PG,200000000,334185206,Adventure|Family|Fantasy,6.5,Tim Burton,Johnny Depp,Alan Rickman,Anne Hathaway,USA
+18,Cars 2,2011,106,G,200000000,191450875,Adventure|Animation|Comedy|Family|Sport,6.3,John Lasseter,Joe Mantegna,Thomas Kretschmann,Eddie Izzard,USA
+19,Green Lantern,2011,123,PG-13,200000000,116593191,Action|Adventure|Sci-Fi,5.6,Martin Campbell,Ryan Reynolds,Temuera Morrison,Taika Waititi,USA
+20,Iron Man 2,2010,124,PG-13,200000000,312057433,Action|Adventure|Sci-Fi,7,Jon Favreau,Robert Downey Jr.,Scarlett Johansson,Jon Favreau,USA
+21,Prince of Persia: The Sands of Time,2010,116,PG-13,200000000,90755643,Action|Adventure|Fantasy|Romance,6.6,Mike Newell,Jake Gyllenhaal,Richard Coyle,Reece Ritchie,USA
+22,Quantum of Solace,2008,106,PG-13,200000000,168368427,Action|Adventure,6.7,Marc Forster,Giancarlo Giannini,Mathieu Amalric,Rory Kinnear,UK
+23,Robin Hood,2010,156,PG-13,200000000,105219735,Action|Adventure|Drama|History,6.7,Ridley Scott,Mark Addy,William Hurt,Scott Grimes,USA
+24,Terminator 3: Rise of the Machines,2003,109,R,200000000,150350192,Action|Sci-Fi,6.4,Jonathan Mostow,Nick Stahl,M.C. Gainey,Carolyn Hennesy,USA
+25,Terminator Salvation,2009,118,PG-13,200000000,125320003,Action|Adventure|Sci-Fi,6.6,McG,Christian Bale,Bryce Dallas Howard,Common,USA
+26,The Amazing Spider-Man 2,2014,142,PG-13,200000000,202853933,Action|Adventure|Fantasy|Sci-Fi,6.7,Marc Webb,Emma Stone,Andrew Garfield,B.J. Novak,USA
+27,Transformers: Revenge of the Fallen,2009,150,PG-13,200000000,402076689,Action|Adventure|Sci-Fi,6,Michael Bay,Glenn Morshower,Kevin Dunn,Ramon Rodriguez,USA
+28,Jack the Giant Slayer,2013,114,PG-13,195000000,65171860,Adventure|Fantasy,6.3,Bryan Singer,Eddie Marsan,Ewen Bremner,Ralph Brown,USA
+29,Transformers: Dark of the Moon,2011,154,PG-13,195000000,352358779,Action|Adventure|Sci-Fi,6.3,Michael Bay,Glenn Morshower,Lester Speight,Kevin Dunn,USA
+30,Pacific Rim,2013,131,PG-13,190000000,101785482,Action|Adventure|Sci-Fi,7,Guillermo del Toro,Charlie Hunnam,Clifton Collins Jr.,Larry Joe Campbell,USA
+31,Tomorrowland,2015,130,PG,190000000,93417865,Action|Adventure|Family|Mystery|Sci-Fi,6.5,Brad Bird,Judy Greer,Chris Bauer,Thomas Robinson,USA
+32,World War Z,2013,123,PG-13,190000000,202351611,Action|Adventure|Horror|Sci-Fi|Thriller,7,Marc Forster,Peter Capaldi,Brad Pitt,Mireille Enos,USA
+33,Indiana Jones and the Kingdom of the Crystal Skull,2008,122,PG-13,185000000,317011114,Action|Adventure|Fantasy,6.2,Steven Spielberg,Harrison Ford,Ray Winstone,Jim Broadbent,USA
+34,Maleficent,2014,97,PG,180000000,241407328,Action|Adventure|Family|Fantasy|Romance,7,Robert Stromberg,Angelina Jolie Pitt,Sharlto Copley,Sam Riley,USA
+35,"The Chronicles of Narnia: The Lion, the Witch and the Wardrobe",2005,150,PG,180000000,291709845,Adventure|Family|Fantasy,6.9,Andrew Adamson,Jim Broadbent,Kiran Shah,Shane Rangi,USA
+36,The Golden Compass,2007,113,PG-13,180000000,70083519,Adventure|Family|Fantasy,6.1,Chris Weitz,Christopher Lee,Eva Green,Kristin Scott Thomas,USA
+37,The Legend of Tarzan,2016,110,PG-13,180000000,124051759,Action|Adventure|Drama|Romance,6.6,David Yates,Christoph Waltz,Alexander Skarsg?�rd,Casper Crump,USA
+38,Jupiter Ascending,2015,127,PG-13,176000000,47375327,Action|Adventure|Sci-Fi,5.4,Lana Wachowski,Channing Tatum,Mila Kunis,Eddie Redmayne,USA
+39,47 Ronin,2013,128,PG-13,175000000,38297305,Action|Adventure|Drama|Fantasy,6.3,Carl Rinsch,Keanu Reeves,Cary-Hiroyuki Tagawa,Jin Akanishi,USA
+40,Evan Almighty,2007,96,PG,175000000,100289690,Comedy|Family|Fantasy,5.4,Tom Shadyac,Jimmy Bennett,Morgan Freeman,Steve Carell,USA
+41,G.I. Joe: The Rise of Cobra,2009,118,PG-13,175000000,150167630,Action|Adventure|Sci-Fi|Thriller,5.8,Stephen Sommers,Joseph Gordon-Levitt,Dennis Quaid,Leo Howard,USA
+42,Monsters vs. Aliens,2009,94,PG,175000000,198332128,Action|Adventure|Animation|Comedy|Family|Sci-Fi,6.5,Rob Letterman,Amy Poehler,Rainn Wilson,Stephen Colbert,USA
+43,Suicide Squad,2016,123,PG-13,175000000,161087183,Action|Adventure|Comedy|Sci-Fi,6.9,David Ayer,Will Smith,Robin Atkin Downes,Ike Barinholtz,USA
+44,Alice Through the Looking Glass,2016,113,PG,170000000,76846624,Adventure|Family|Fantasy,6.4,James Bobin,Johnny Depp,Alan Rickman,Anne Hathaway,USA
+45,Snow White and the Huntsman,2012,132,PG-13,170000000,155111815,Action|Adventure|Drama|Fantasy,6.1,Rupert Sanders,Chris Hemsworth,Kristen Stewart,Sam Claflin,USA
+46,TRON: Legacy,2010,125,PG,170000000,172051787,Action|Adventure|Sci-Fi,6.8,Joseph Kosinski,Jeff Bridges,Olivia Wilde,James Frain,USA
+47,Independence Day: Resurgence,2016,120,PG-13,165000000,102315545,Action|Adventure|Sci-Fi,5.5,Roland Emmerich,Vivica A. Fox,Sela Ward,Judd Hirsch,USA
+48,Shrek Forever After,2010,93,PG,165000000,238371987,Adventure|Animation|Comedy|Family|Fantasy,6.4,Mike Mitchell,Jon Hamm,Kathy Griffin,Mary Kay Place,USA
+49,The Polar Express,2004,100,G,165000000,665426,Adventure|Animation|Family|Fantasy,6.6,Robert Zemeckis,Tom Hanks,Eddie Deezen,Peter Scolari,USA
+50,Poseidon,2006,98,PG-13,160000000,60655503,Action|Adventure|Drama|Thriller,5.6,Wolfgang Petersen,Jimmy Bennett,Mike Vogel,Andre Braugher,USA
