@@ -1,0 +1,369 @@
+-- import JSON doc to table
+-- data source: https://rss.itunes.apple.com/api/v1/th/apple-music/top-songs/all/5/non-explicit.json
+
+drop table if exists song;
+
+create table song (
+   info jsonb   
+);
+
+insert into song (info)
+select * from json_array_elements('
+[
+            {
+                "artistName": "Maiyarap",
+                "id": "1534684129",
+                "releaseDate": "2020-10-07",
+                "name": "แฟนใหม่หน้าคุ้น (feat. Milli)",
+                "collectionName": "แฟนใหม่หน้าคุ้น (feat. Milli) - Single",
+                "kind": "song",
+                "copyright": "℗ 2020 Yupp! Entertainment",
+                "artistId": "1139470041",
+                "artistUrl": "https://music.apple.com/th/artist/maiyarap/1139470041?app=music",
+                "artworkUrl100": "https://is4-ssl.mzstatic.com/image/thumb/Music114/v4/b1/c8/5c/b1c85ce1-f1a6-0e43-d805-811e9387575a/cover.jpg/200x200bb.png",
+                "genres": [
+                    {
+                        "genreId": "18",
+                        "name": "Hip-Hop/Rap",
+                        "url": "https://itunes.apple.com/th/genre/id18"
+                    },
+                    {
+                        "genreId": "34",
+                        "name": "Music",
+                        "url": "https://itunes.apple.com/th/genre/id34"
+                    }
+                ],
+                "url": "https://music.apple.com/th/album/%E0%B9%81%E0%B8%9F%E0%B8%99%E0%B9%83%E0%B8%AB%E0%B8%A1-%E0%B8%AB%E0%B8%99-%E0%B8%B2%E0%B8%84-%E0%B8%99-feat-milli/1534684126?i=1534684129\u0026app=music"
+            },
+            {
+                "artistName": "BLACKPINK",
+                "id": "1533366880",
+                "releaseDate": "2020-10-02",
+                "name": "Lovesick Girls",
+                "collectionName": "THE ALBUM",
+                "kind": "song",
+                "copyright": "℗ 2020 YG Entertainment",
+                "artistId": "1141774019",
+                "artistUrl": "https://music.apple.com/th/artist/blackpink/1141774019?app=music",
+                "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/fd/25/84/fd25844f-b2ab-6a04-06ea-4e7377738abe/BLACKPINK_Crown_0728.jpg/200x200bb.png",
+                "genres": [
+                    {
+                        "genreId": "51",
+                        "name": "K-Pop",
+                        "url": "https://itunes.apple.com/th/genre/id51"
+                    },
+                    {
+                        "genreId": "34",
+                        "name": "Music",
+                        "url": "https://itunes.apple.com/th/genre/id34"
+                    },
+                    {
+                        "genreId": "14",
+                        "name": "Pop",
+                        "url": "https://itunes.apple.com/th/genre/id14"
+                    }
+                ],
+                "url": "https://music.apple.com/th/album/lovesick-girls/1533366575?i=1533366880\u0026app=music"
+            },
+            {
+                "artistName": "NCT U",
+                "id": "1534864463",
+                "releaseDate": "2020-10-12",
+                "name": "Make A Wish (Birthday Song)",
+                "collectionName": "NCT RESONANCE Pt. 1 - The 2nd Album",
+                "kind": "song",
+                "copyright": "℗ 2020 SM Entertainment",
+                "artistId": "1104310472",
+                "artistUrl": "https://music.apple.com/th/artist/nct-u/1104310472?app=music",
+                "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/ee/38/4a/ee384a16-5190-0902-ddb2-e21fe7e713f9/NCT_RESONANCE_pt1_F.jpg/200x200bb.png",
+                "genres": [
+                    {
+                        "genreId": "51",
+                        "name": "K-Pop",
+                        "url": "https://itunes.apple.com/th/genre/id51"
+                    },
+                    {
+                        "genreId": "34",
+                        "name": "Music",
+                        "url": "https://itunes.apple.com/th/genre/id34"
+                    },
+                    {
+                        "genreId": "14",
+                        "name": "Pop",
+                        "url": "https://itunes.apple.com/th/genre/id14"
+                    }
+                ],
+                "url": "https://music.apple.com/th/album/make-a-wish-birthday-song/1534864462?i=1534864463\u0026app=music"
+            },
+            {
+                "artistName": "First Anuwat",
+                "id": "1524627685",
+                "releaseDate": "2020-08-20",
+                "name": "ถ้าเขาจะรัก (ยืนเฉยๆเขาก็รัก)",
+                "collectionName": "ถ้าเขาจะรัก (ยืนเฉยๆเขาก็รัก) - Single",
+                "kind": "song",
+                "copyright": "℗ 2020 Marr",
+                "artistId": "1524614156",
+                "artistUrl": "https://music.apple.com/th/artist/first-anuwat/1524614156?app=music",
+                "artworkUrl100": "https://is4-ssl.mzstatic.com/image/thumb/Music114/v4/0e/a3/36/0ea336bb-a6bc-1b01-a7d8-fd6b6e409730/cover.jpg/200x200bb.png",
+                "genres": [
+                    {
+                        "genreId": "14",
+                        "name": "Pop",
+                        "url": "https://itunes.apple.com/th/genre/id14"
+                    },
+                    {
+                        "genreId": "34",
+                        "name": "Music",
+                        "url": "https://itunes.apple.com/th/genre/id34"
+                    }
+                ],
+                "url": "https://music.apple.com/th/album/%E0%B8%96-%E0%B8%B2%E0%B9%80%E0%B8%82%E0%B8%B2%E0%B8%88%E0%B8%B0%E0%B8%A3-%E0%B8%81-%E0%B8%A2-%E0%B8%99%E0%B9%80%E0%B8%89%E0%B8%A2%E0%B9%86%E0%B9%80%E0%B8%82%E0%B8%B2%E0%B8%81-%E0%B8%A3-%E0%B8%81/1524627680?i=1524627685\u0026app=music"
+            },
+            {
+                "artistName": "BLACKPINK",
+                "id": "1533366878",
+                "releaseDate": "2020-10-02",
+                "name": "Pretty Savage",
+                "collectionName": "THE ALBUM",
+                "kind": "song",
+                "copyright": "℗ 2020 YG Entertainment",
+                "artistId": "1141774019",
+                "artistUrl": "https://music.apple.com/th/artist/blackpink/1141774019?app=music",
+                "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/fd/25/84/fd25844f-b2ab-6a04-06ea-4e7377738abe/BLACKPINK_Crown_0728.jpg/200x200bb.png",
+                "genres": [
+                    {
+                        "genreId": "51",
+                        "name": "K-Pop",
+                        "url": "https://itunes.apple.com/th/genre/id51"
+                    },
+                    {
+                        "genreId": "34",
+                        "name": "Music",
+                        "url": "https://itunes.apple.com/th/genre/id34"
+                    },
+                    {
+                        "genreId": "14",
+                        "name": "Pop",
+                        "url": "https://itunes.apple.com/th/genre/id14"
+                    }
+                ],
+                "url": "https://music.apple.com/th/album/pretty-savage/1533366575?i=1533366878\u0026app=music"
+            },
+            {
+                "artistName": "BLACKPINK \u0026 Selena Gomez",
+                "id": "1533366877",
+                "releaseDate": "2020-08-28",
+                "name": "Ice Cream",
+                "collectionName": "THE ALBUM",
+                "kind": "song",
+                "copyright": "℗ 2020 YG Entertainment",
+                "artistId": "1141774019",
+                "artistUrl": "https://music.apple.com/WebObjects/MZStore.woa/wa/viewCollaboration?cc=th\u0026ids=1141774019-280215834\u0026app=music",
+                "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/fd/25/84/fd25844f-b2ab-6a04-06ea-4e7377738abe/BLACKPINK_Crown_0728.jpg/200x200bb.png",
+                "genres": [
+                    {
+                        "genreId": "51",
+                        "name": "K-Pop",
+                        "url": "https://itunes.apple.com/th/genre/id51"
+                    },
+                    {
+                        "genreId": "34",
+                        "name": "Music",
+                        "url": "https://itunes.apple.com/th/genre/id34"
+                    },
+                    {
+                        "genreId": "14",
+                        "name": "Pop",
+                        "url": "https://itunes.apple.com/th/genre/id14"
+                    }
+                ],
+                "url": "https://music.apple.com/th/album/ice-cream/1533366575?i=1533366877\u0026app=music"
+            },
+            {
+                "artistName": "F.HERO \u0026 Tilly Birds",
+                "id": "1516782495",
+                "releaseDate": "2020-06-18",
+                "name": "Slipped Your Mind",
+                "collectionName": "Slipped Your Mind - Single",
+                "kind": "song",
+                "copyright": "℗ 2020 What The Duck",
+                "artistId": "1408535810",
+                "artistUrl": "https://music.apple.com/WebObjects/MZStore.woa/wa/viewCollaboration?cc=th\u0026ids=1408535810-935689375\u0026app=music",
+                "artworkUrl100": "https://is3-ssl.mzstatic.com/image/thumb/Music113/v4/93/06/85/930685b1-9743-b10a-579b-f2905d3b5276/cover.jpg/200x200bb.png",
+                "genres": [
+                    {
+                        "genreId": "18",
+                        "name": "Hip-Hop/Rap",
+                        "url": "https://itunes.apple.com/th/genre/id18"
+                    },
+                    {
+                        "genreId": "34",
+                        "name": "Music",
+                        "url": "https://itunes.apple.com/th/genre/id34"
+                    }
+                ],
+                "url": "https://music.apple.com/th/album/slipped-your-mind/1516782290?i=1516782495\u0026app=music"
+            },
+            {
+                "artistName": "Billkin",
+                "id": "1533639435",
+                "releaseDate": "2020-10-01",
+                "name": "Skyline (Ost. I told sunset about you)",
+                "collectionName": "Skyline (Ost. I told sunset about you) - Single",
+                "kind": "song",
+                "copyright": "℗ 2020 Nadao Music",
+                "artistId": "1477175033",
+                "artistUrl": "https://music.apple.com/th/artist/billkin/1477175033?app=music",
+                "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/6f/f0/c3/6ff0c3a3-bacb-397a-6114-fada678a3fd3/cover.jpg/200x200bb.png",
+                "genres": [
+                    {
+                        "genreId": "14",
+                        "name": "Pop",
+                        "url": "https://itunes.apple.com/th/genre/id14"
+                    },
+                    {
+                        "genreId": "34",
+                        "name": "Music",
+                        "url": "https://itunes.apple.com/th/genre/id34"
+                    }
+                ],
+                "url": "https://music.apple.com/th/album/skyline-ost-i-told-sunset-about-you/1533639244?i=1533639435\u0026app=music"
+            },
+            {
+                "artistName": "SERIOUS BACON",
+                "id": "1535773153",
+                "releaseDate": "2020-10-20",
+                "name": "ไม่อยากฟัง",
+                "collectionName": "ไม่อยากฟัง - Single",
+                "kind": "song",
+                "copyright": "℗ 2020 Boxx Music",
+                "artistId": "1509888018",
+                "artistUrl": "https://music.apple.com/th/artist/serious-bacon/1509888018?app=music",
+                "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/12/5c/b7/125cb7aa-8573-c661-ff31-616902bbb897/0840102428797.jpg/200x200bb.png",
+                "genres": [
+                    {
+                        "genreId": "14",
+                        "name": "Pop",
+                        "url": "https://itunes.apple.com/th/genre/id14"
+                    },
+                    {
+                        "genreId": "34",
+                        "name": "Music",
+                        "url": "https://itunes.apple.com/th/genre/id34"
+                    }
+                ],
+                "url": "https://music.apple.com/th/album/%E0%B9%84%E0%B8%A1-%E0%B8%AD%E0%B8%A2%E0%B8%B2%E0%B8%81%E0%B8%9F-%E0%B8%87/1535773152?i=1535773153\u0026app=music"
+            },
+            {
+                "artistName": "Palmy",
+                "id": "1530887751",
+                "releaseDate": "2020-09-24",
+                "name": "ขวัญเอยขวัญมา",
+                "collectionName": "ขวัญเอยขวัญมา - Single",
+                "kind": "song",
+                "copyright": "℗ 2020 GMM Grammy PCL.",
+                "artistId": "301261712",
+                "artistUrl": "https://music.apple.com/th/artist/palmy/301261712?app=music",
+                "artworkUrl100": "https://is2-ssl.mzstatic.com/image/thumb/Music124/v4/0b/5e/6a/0b5e6af3-fbfa-250c-6832-c2ecf472afad/2009410201.jpg/200x200bb.png",
+                "genres": [
+                    {
+                        "genreId": "21",
+                        "name": "Rock",
+                        "url": "https://itunes.apple.com/th/genre/id21"
+                    },
+                    {
+                        "genreId": "34",
+                        "name": "Music",
+                        "url": "https://itunes.apple.com/th/genre/id34"
+                    }
+                ],
+                "url": "https://music.apple.com/th/album/%E0%B8%82%E0%B8%A7-%E0%B8%8D%E0%B9%80%E0%B8%AD%E0%B8%A2%E0%B8%82%E0%B8%A7-%E0%B8%8D%E0%B8%A1%E0%B8%B2/1530887750?i=1530887751\u0026app=music"
+            }
+        ]
+');
+
+select * from song;
+
+-- remove 'id' key/value
+select info->>'id' id, info - 'id' info
+    from song;
+
+-- remove 'id' and 'kind' key/value
+select info->>'id' id, info - 'id' - 'kind' info
+    from song;
+
+select info->>'id' id, info #- '{genres,1}' info
+    from song;
+
+select info->>'id' id, info #- '{genres,1,url}' info
+    from song;
+
+select info->>'id' id, (info - 'id' - 'kind') #- '{genres,1}' info
+    from song;
+
+drop table if exists song_j;
+select info->>'id' id, (info - 'id' - 'kind') #- '{genres,1}' info
+    into song_j
+    from song;
+select * from song_j;
+
+select info, info->'genres', info->'genres'->0, info->'genres'->0->>'name'
+    from song_j;
+
+select info->>'artistName', info->>'name' from song_j 
+    where info->>'name' ilike '%love%';
+
+select info, info->'genres' from song_j;
+
+select id, info->'genres', 
+    jsonb_array_length(info->'genres'), 
+    jsonb_array_elements(info->'genres') genre
+    from song_j;
+
+select id, info->'name', 
+    jsonb_array_elements(info->'genres') genre 
+    from song_j;
+
+with t as (
+    select id, info->'name', 
+    jsonb_array_elements(info->'genres') genre 
+    from song_j
+)
+select * from t where genre->>'name'='K-Pop';
+
+with t as (
+    select id, info->'name', 
+    jsonb_array_elements(info->'genres') genre 
+    from song_j
+)
+select genre->>'name', count(*) from t 
+    group by genre->>'name';
+
+select info #- '{genres,1}' from song_j;
+
+
+with t as (
+    select id, info->'name', 
+    jsonb_array_elements(info->'genres') genre 
+    from song_j
+)
+select id, jsonb_agg(genre) from t group by id;
+
+-- remove 'Music' genres
+with t as (
+    select id, info->'name', 
+    jsonb_array_elements(info->'genres') genre 
+    from song_j
+),
+t2 as (
+    select id, genre from t where genre->>'name' != 'Music'
+),
+t3 as (
+select id, jsonb_agg(genre) genres from t2 group by id
+)
+update song_j
+    set info=jsonb_set(info, '{genres}', genres)
+    from t3 where t3.id=song_j.id;
+
+select * from song_j;

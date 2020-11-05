@@ -1,0 +1,89 @@
+-- basic json array
+
+drop table if exists movie_ts;
+
+CREATE TABLE movie_ts (
+    title varchar(100),
+    year int,
+    rating real,
+    revenue_millions real,
+    genre varchar(100),
+    description varchar(500),
+    director varchar(200),
+    actors varchar(200)
+);
+
+INSERT INTO movie_ts VALUES ('Guardians of the Galaxy', 2014, 8.1, 333.13, 'Action,Adventure,Sci-Fi', 'A group of intergalactic criminals are forced to work together to stop a fanatical warrior from taking control of the universe.', 'James Gunn', 'Chris Pratt, Vin Diesel, Bradley Cooper, Zoe Saldana');
+INSERT INTO movie_ts VALUES ('Prometheus', 2012, 7, 126.46, 'Adventure,Mystery,Sci-Fi', 'Following clues to the origin of mankind, a team finds a structure on a distant moon, but they soon realize they are not alone.', 'Ridley Scott', 'Noomi Rapace, Logan Marshall-Green, Michael Fassbender, Charlize Theron');
+INSERT INTO movie_ts VALUES ('Split', 2016, 7.3, 138.12, 'Horror,Thriller', 'Three girls are kidnapped by a man with a diagnosed 23 distinct personalities. They must try to escape before the apparent emergence of a frightful new 24th.', 'M. Night Shyamalan', 'James McAvoy, Anya Taylor-Joy, Haley Lu Richardson, Jessica Sula');
+INSERT INTO movie_ts VALUES ('Sing', 2016, 7.2, 270.32, 'Animation,Comedy,Family', 'In a city of humanoid animals, a hustling theater impresario''s attempt to save his theater with a singing competition becomes grander than he anticipates even as its finalists'' find that their lives will never be the same.', 'Christophe Lourdelet', 'Matthew McConaughey,Reese Witherspoon, Seth MacFarlane, Scarlett Johansson');
+INSERT INTO movie_ts VALUES ('Suicide Squad', 2016, 6.2, 325.02, 'Action,Adventure,Fantasy', 'A secret government agency recruits some of the most dangerous incarcerated super-villains to form a defensive task force. Their first mission: save the world from the apocalypse.', 'David Ayer', 'Will Smith, Jared Leto, Margot Robbie, Viola Davis');
+INSERT INTO movie_ts VALUES ('The Great Wall', 2016, 6.1, 45.13, 'Action,Adventure,Fantasy', 'European mercenaries searching for black powder become embroiled in the defense of the Great Wall of China against a horde of monstrous creatures.', 'Yimou Zhang', 'Matt Damon, Tian Jing, Willem Dafoe, Andy Lau');
+INSERT INTO movie_ts VALUES ('La La Land', 2016, 8.3, 151.06, 'Comedy,Drama,Music', 'A jazz pianist falls for an aspiring actress in Los Angeles.', 'Damien Chazelle', 'Ryan Gosling, Emma Stone, Rosemarie DeWitt, J.K. Simmons');
+INSERT INTO movie_ts VALUES ('Mindhorn', 2016, 6.4, NULL, 'Comedy', 'A has-been actor best known for playing the title character in the 1980s detective series "Mindhorn" must work with the police when a serial killer says that he will only speak with Detective Mindhorn, whom he believes to be a real person.', 'Sean Foley', 'Essie Davis, Andrea Riseborough, Julian Barratt,Kenneth Branagh');
+INSERT INTO movie_ts VALUES ('The Lost City of Z', 2016, 7.1, 8.01, 'Action,Adventure,Biography', 'A true-life drama, centering on British explorer Col. Percival Fawcett, who disappeared while searching for a mysterious city in the Amazon in the 1920s.', 'James Gray', 'Charlie Hunnam, Robert Pattinson, Sienna Miller, Tom Holland');
+INSERT INTO movie_ts VALUES ('Passengers', 2016, 7, 100.01, 'Adventure,Drama,Romance', 'A spacecraft traveling to a distant colony planet and transporting thousands of people has a malfunction in its sleep chambers. As a result, two passengers are awakened 90 years early.', 'Morten Tyldum', 'Jennifer Lawrence, Chris Pratt, Michael Sheen,Laurence Fishburne');
+
+select * from movie_ts;
+
+select title, genre, 
+    string_to_array(genre, ','),
+    array_to_json(string_to_array(genre, ','))
+    from movie_ts;
+
+alter table movie_ts
+    drop column if exists genre_j;
+
+alter table movie_ts
+    add column genre_j jsonb;
+
+select * from movie_ts;
+
+update movie_ts
+    set genre_j=array_to_json(string_to_array(genre, ','));
+
+select title, genre, genre_j from movie_ts;
+
+select title, genre, genre_j, genre_j->>0, genre_j->>1, genre_j->>2 from movie_ts;
+
+select title, genre_j from movie_ts where genre_j ?| array['Comedy'];
+
+select title, genre_j from movie_ts where genre_j ?| array['Comedy', 'Animation'];
+
+select title, genre_j from movie_ts where genre_j ?& array['Comedy', 'Animation'];
+
+select title, genre_j from movie_ts;
+
+update movie_ts
+    set genre_j=genre_j || '["Adventure"]'::jsonb
+    where title='Sing';
+
+update movie_ts
+    set genre_j=genre_j || '["Musical", "Sci-Fi"]'::jsonb
+    where title='Sing';
+	
+select title, genre, genre_j from movie_ts where title='Sing';
+
+select title, jsonb_array_elements_text(genre_j) from movie_ts;
+
+with t as (
+    select title, jsonb_array_elements_text(genre_j) genres
+        from movie_ts
+)
+select * from t
+    where genres ilike 'a%';
+
+with t as (
+    select jsonb_array_elements_text(genre_j) genres
+        from movie_ts
+)
+select * from t;
+
+with t as (
+    select jsonb_array_elements_text(genre_j) genres
+        from movie_ts
+)
+select genres, count(*) freq from t
+    group by genres
+	having count(*) > 1
+    order by freq desc;

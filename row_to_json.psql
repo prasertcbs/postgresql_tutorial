@@ -1,0 +1,28 @@
+-- topic: export query results to JSON with row_to_json()
+-- YouTube: https://youtu.be/Q0kEAZ3SMpo
+-- Author: Prasert Kanawattanachai
+-- email: prasert.k@chula.ac.th
+
+select * from province;
+
+select row_to_json(province) from province;
+
+select row_to_json(row(p_id, name)) 
+    from province limit 5;
+
+with cte as (
+    select p_id, name 
+    from province
+    where region='S'
+)
+select row_to_json(cte) from cte;
+
+copy (
+    with cte as (
+        select p_id, name 
+        from province
+        where region='S'
+    )
+    select row_to_json(cte) from cte
+) to 'c:/temp/south.json';
+

@@ -1,0 +1,106 @@
+-- สอน PostgreSQL: การสร้าง JSON objects ด้วย jsonb_build_object() และ jsonb_build_array()
+-- PostgreSQL JSON features
+-- jsonb_build_object()
+-- jsonb_build_array()
+-- Author: Prasert Kanawattanachai
+-- email: prasert.k@chula.ac.th
+
+drop table if exists movie_meta;
+
+CREATE TABLE movie_meta (
+    movie_title varchar(100),
+    title_year int,
+    duration int,
+    content_rating varchar(20),
+    budget bigint,
+    gross bigint,
+    genres varchar(100),
+    imdb_score real,
+    director_name varchar(50),
+    actor_1_name varchar(50),
+    actor_2_name varchar(50),
+    actor_3_name varchar(50),
+    country varchar(20),
+    language varchar(10),
+    facenumber_in_poster int,
+    director_facebook_likes int,
+    actor_1_facebook_likes int,
+    actor_2_facebook_likes int,
+    actor_3_facebook_likes int,
+    cast_total_facebook_likes int,
+    movie_facebook_likes int,
+    num_critic_for_reviews int,
+    num_user_for_reviews int,
+    num_voted_users int,
+    plot_keywords varchar(200),
+    movie_imdb_link varchar(255),
+    color varchar(15),
+    aspect_ratio real
+);
+
+INSERT INTO movie_meta VALUES ('Avatar', 2009, 178, 'PG-13', 237000000, 760505847, 'Action|Adventure|Fantasy|Sci-Fi', 7.9, 'James Cameron', 'CCH Pounder', 'Joel David Moore', 'Wes Studi', 'USA', 'English', 0, 0, 1000, 936, 855, 4834, 33000, 723, 3054, 886204, 'avatar|future|marine|native|paraplegic', 'http://www.imdb.com/title/tt0499549/?ref_=fn_tt_tt_1', 'Color', 1.78);
+INSERT INTO movie_meta VALUES ('Pirates of the Caribbean: At World''s End', 2007, 169, 'PG-13', 300000000, 309404152, 'Action|Adventure|Fantasy', 7.1, 'Gore Verbinski', 'Johnny Depp', 'Orlando Bloom', 'Jack Davenport', 'USA', 'English', 0, 563, 40000, 5000, 1000, 48350, 0, 302, 1238, 471220, 'goddess|marriage ceremony|marriage proposal|pirate|singapore', 'http://www.imdb.com/title/tt0449088/?ref_=fn_tt_tt_1', 'Color', 2.35);
+INSERT INTO movie_meta VALUES ('Spectre', 2015, 148, 'PG-13', 245000000, 200074175, 'Action|Adventure|Thriller', 6.8, 'Sam Mendes', 'Christoph Waltz', 'Rory Kinnear', 'Stephanie Sigman', 'UK', 'English', 1, 0, 11000, 393, 161, 11700, 85000, 602, 994, 275868, 'bomb|espionage|sequel|spy|terrorist', 'http://www.imdb.com/title/tt2379713/?ref_=fn_tt_tt_1', 'Color', 2.35);
+INSERT INTO movie_meta VALUES ('The Dark Knight Rises', 2012, 164, 'PG-13', 250000000, 448130642, 'Action|Thriller', 8.5, 'Christopher Nolan', 'Tom Hardy', 'Christian Bale', 'Joseph Gordon-Levitt', 'USA', 'English', 0, 22000, 27000, 23000, 23000, 106759, 164000, 813, 2701, 1144337, 'deception|imprisonment|lawlessness|police officer|terrorist plot', 'http://www.imdb.com/title/tt1345836/?ref_=fn_tt_tt_1', 'Color', 2.35);
+INSERT INTO movie_meta VALUES ('Star Wars: Episode VII - The Force Awakens', NULL, NULL, NULL, NULL, NULL, 'Documentary', 7.1, 'Doug Walker', 'Doug Walker', 'Rob Walker', NULL, NULL, NULL, 0, 131, 131, 12, NULL, 143, 0, NULL, NULL, 8, NULL, 'http://www.imdb.com/title/tt5289954/?ref_=fn_tt_tt_1', NULL, NULL);
+INSERT INTO movie_meta VALUES ('John Carter', 2012, 132, 'PG-13', 263700000, 73058679, 'Action|Adventure|Sci-Fi', 6.6, 'Andrew Stanton', 'Daryl Sabara', 'Samantha Morton', 'Polly Walker', 'USA', 'English', 1, 475, 640, 632, 530, 1873, 24000, 462, 738, 212204, 'alien|american civil war|male nipple|mars|princess', 'http://www.imdb.com/title/tt0401729/?ref_=fn_tt_tt_1', 'Color', 2.35);
+INSERT INTO movie_meta VALUES ('Spider-Man 3', 2007, 156, 'PG-13', 258000000, 336530303, 'Action|Adventure|Romance', 6.2, 'Sam Raimi', 'J.K. Simmons', 'James Franco', 'Kirsten Dunst', 'USA', 'English', 0, 0, 24000, 11000, 4000, 46055, 0, 392, 1902, 383056, 'sandman|spider man|symbiote|venom|villain', 'http://www.imdb.com/title/tt0413300/?ref_=fn_tt_tt_1', 'Color', 2.35);
+INSERT INTO movie_meta VALUES ('Tangled', 2010, 100, 'PG', 260000000, 200807262, 'Adventure|Animation|Comedy|Family|Fantasy|Musical|Romance', 7.8, 'Nathan Greno', 'Brad Garrett', 'Donna Murphy', 'M.C. Gainey', 'USA', 'English', 1, 15, 799, 553, 284, 2036, 29000, 324, 387, 294810, '17th century|based on fairy tale|disney|flower|tower', 'http://www.imdb.com/title/tt0398286/?ref_=fn_tt_tt_1', 'Color', 1.85);
+INSERT INTO movie_meta VALUES ('Avengers: Age of Ultron', 2015, 141, 'PG-13', 250000000, 458991599, 'Action|Adventure|Sci-Fi', 7.5, 'Joss Whedon', 'Chris Hemsworth', 'Robert Downey Jr.', 'Scarlett Johansson', 'USA', 'English', 4, 0, 26000, 21000, 19000, 92000, 118000, 635, 1117, 462669, 'artificial intelligence|based on comic book|captain america|marvel cinematic universe|superhero', 'http://www.imdb.com/title/tt2395427/?ref_=fn_tt_tt_1', 'Color', 2.35);
+INSERT INTO movie_meta VALUES ('Harry Potter and the Half-Blood Prince', 2009, 153, 'PG', 250000000, 301956980, 'Adventure|Family|Fantasy|Mystery', 7.5, 'David Yates', 'Alan Rickman', 'Daniel Radcliffe', 'Rupert Grint', 'UK', 'English', 3, 282, 25000, 11000, 10000, 58753, 10000, 375, 973, 321795, 'blood|book|love|potion|professor', 'http://www.imdb.com/title/tt0417741/?ref_=fn_tt_tt_1', 'Color', 2.35);
+INSERT INTO movie_meta VALUES ('Batman v Superman: Dawn of Justice', 2016, 183, 'PG-13', 250000000, 330249062, 'Action|Adventure|Sci-Fi', 6.9, 'Zack Snyder', 'Henry Cavill', 'Lauren Cohan', 'Alan D. Purwin', 'USA', 'English', 0, 0, 15000, 4000, 2000, 24450, 197000, 673, 3018, 371639, 'based on comic book|batman|sequel to a reboot|superhero|superman', 'http://www.imdb.com/title/tt2975590/?ref_=fn_tt_tt_1', 'Color', 2.35);
+INSERT INTO movie_meta VALUES ('Superman Returns', 2006, 169, 'PG-13', 209000000, 200069408, 'Action|Adventure|Sci-Fi', 6.1, 'Bryan Singer', 'Kevin Spacey', 'Marlon Brando', 'Frank Langella', 'USA', 'English', 0, 0, 18000, 10000, 903, 29991, 0, 434, 2367, 240396, 'crystal|epic|lex luthor|lois lane|return to earth', 'http://www.imdb.com/title/tt0348150/?ref_=fn_tt_tt_1', 'Color', 2.35);
+INSERT INTO movie_meta VALUES ('Quantum of Solace', 2008, 106, 'PG-13', 200000000, 168368427, 'Action|Adventure', 6.7, 'Marc Forster', 'Giancarlo Giannini', 'Mathieu Amalric', 'Rory Kinnear', 'UK', 'English', 1, 395, 451, 412, 393, 2023, 0, 403, 1243, 330784, 'action hero|attempted rape|bond girl|official james bond series|revenge', 'http://www.imdb.com/title/tt0830515/?ref_=fn_tt_tt_1', 'Color', 2.35);
+INSERT INTO movie_meta VALUES ('Pirates of the Caribbean: Dead Man''s Chest', 2006, 151, 'PG-13', 225000000, 423032628, 'Action|Adventure|Fantasy', 7.3, 'Gore Verbinski', 'Johnny Depp', 'Orlando Bloom', 'Jack Davenport', 'USA', 'English', 2, 563, 40000, 5000, 1000, 48486, 5000, 313, 1832, 522040, 'box office hit|giant squid|heart|liar''s dice|monster', 'http://www.imdb.com/title/tt0383574/?ref_=fn_tt_tt_1', 'Color', 2.35);
+INSERT INTO movie_meta VALUES ('The Lone Ranger', 2013, 150, 'PG-13', 215000000, 89289910, 'Action|Adventure|Western', 6.5, 'Gore Verbinski', 'Johnny Depp', 'Ruth Wilson', 'Tom Wilkinson', 'USA', 'English', 1, 563, 40000, 2000, 1000, 45757, 48000, 450, 711, 181792, 'horse|outlaw|texas|texas ranger|train', 'http://www.imdb.com/title/tt1210819/?ref_=fn_tt_tt_1', 'Color', 2.35);
+INSERT INTO movie_meta VALUES ('Man of Steel', 2013, 143, 'PG-13', 225000000, 291021565, 'Action|Adventure|Fantasy|Sci-Fi', 7.2, 'Zack Snyder', 'Henry Cavill', 'Christopher Meloni', 'Harry Lennix', 'USA', 'English', 0, 0, 15000, 3000, 748, 20495, 118000, 733, 2536, 548573, 'based on comic book|british actor playing american character|final battle|origin of hero|reboot', 'http://www.imdb.com/title/tt0770828/?ref_=fn_tt_tt_1', 'Color', 2.35);
+INSERT INTO movie_meta VALUES ('Flushed Away', 2006, 85, 'PG', 149000000, 64459316, 'Adventure|Animation|Comedy|Family', 6.7, 'David Bowers', 'Hugh Jackman', 'Kate Winslet', 'David Suchet', 'UK', 'English', 0, 42, 20000, 14000, 586, 35161, 0, 135, 122, 85086, 'boat|frog|rat|sewer|toad', 'http://www.imdb.com/title/tt0424095/?ref_=fn_tt_tt_1', 'Color', 1.85);
+INSERT INTO movie_meta VALUES ('The Chronicles of Narnia: Prince Caspian', 2008, 150, 'PG', 225000000, 141614023, 'Action|Adventure|Family|Fantasy', 6.6, 'Andrew Adamson', 'Peter Dinklage', 'Pierfrancesco Favino', 'Damián Alcázar', 'USA', 'English', 4, 80, 22000, 216, 201, 22697, 0, 258, 438, 149922, 'brother brother relationship|brother sister relationship|good versus evil|king|narnia', 'http://www.imdb.com/title/tt0499448/?ref_=fn_tt_tt_1', 'Color', 2.35);
+INSERT INTO movie_meta VALUES ('The Avengers', 2012, 173, 'PG-13', 220000000, 623279547, 'Action|Adventure|Sci-Fi', 8.1, 'Joss Whedon', 'Chris Hemsworth', 'Robert Downey Jr.', 'Scarlett Johansson', 'USA', 'English', 3, 0, 26000, 21000, 19000, 87697, 123000, 703, 1722, 995415, 'alien invasion|assassin|battle|iron man|soldier', 'http://www.imdb.com/title/tt0848228/?ref_=fn_tt_tt_1', 'Color', 1.85);
+INSERT INTO movie_meta VALUES ('Pirates of the Caribbean: On Stranger Tides', 2011, 136, 'PG-13', 250000000, 241063875, 'Action|Adventure|Fantasy', 6.7, 'Rob Marshall', 'Johnny Depp', 'Sam Claflin', 'Stephen Graham', 'USA', 'English', 4, 252, 40000, 11000, 1000, 54083, 58000, 448, 484, 370704, 'blackbeard|captain|pirate|revenge|soldier', 'http://www.imdb.com/title/tt1298650/?ref_=fn_tt_tt_1', 'Color', 2.35);
+INSERT INTO movie_meta VALUES ('Men in Black 3', 2012, 106, 'PG-13', 225000000, 179020854, 'Action|Adventure|Comedy|Family|Fantasy|Sci-Fi', 6.8, 'Barry Sonnenfeld', 'Will Smith', 'Michael Stuhlbarg', 'Nicole Scherzinger', 'USA', 'English', 1, 188, 10000, 816, 718, 12572, 40000, 451, 341, 268154, 'alien|criminal|m.i.b.|maximum security prison|prison', 'http://www.imdb.com/title/tt1409024/?ref_=fn_tt_tt_1', 'Color', 1.85);
+INSERT INTO movie_meta VALUES ('The Hobbit: The Battle of the Five Armies', 2014, 164, 'PG-13', 250000000, 255108370, 'Adventure|Fantasy', 7.5, 'Peter Jackson', 'Aidan Turner', 'Adam Brown', 'James Nesbitt', 'New Zealand', 'English', 0, 0, 5000, 972, 773, 9152, 65000, 422, 802, 354228, 'army|elf|hobbit|middle earth|orc', 'http://www.imdb.com/title/tt2310332/?ref_=fn_tt_tt_1', 'Color', 2.35);
+INSERT INTO movie_meta VALUES ('The Amazing Spider-Man', 2012, 153, 'PG-13', 230000000, 262030663, 'Action|Adventure|Fantasy', 7, 'Marc Webb', 'Emma Stone', 'Andrew Garfield', 'Chris Zylka', 'USA', 'English', 0, 464, 15000, 10000, 963, 28489, 56000, 599, 1225, 451803, 'lizard|outcast|spider|spider man|teenager', 'http://www.imdb.com/title/tt0948470/?ref_=fn_tt_tt_1', 'Color', 2.35);
+INSERT INTO movie_meta VALUES ('Robin Hood', 2010, 156, 'PG-13', 200000000, 105219735, 'Action|Adventure|Drama|History', 6.7, 'Ridley Scott', 'Mark Addy', 'William Hurt', 'Scott Grimes', 'USA', 'English', 0, 0, 891, 882, 738, 3244, 17000, 343, 546, 211765, '1190s|archer|england|king of england|robin hood', 'http://www.imdb.com/title/tt0955308/?ref_=fn_tt_tt_1', 'Color', 2.35);
+
+select * from movie_meta;
+
+select actor_1_name, actor_2_name, actor_3_name, 
+    jsonb_build_array(actor_1_name, actor_2_name, actor_3_name) actors
+    from movie_meta;
+
+select director_name, actor_1_name, actor_2_name, actor_3_name,
+    jsonb_build_array(actor_1_name, actor_2_name, actor_3_name) actors,
+    jsonb_build_object('actor1', actor_1_name, 'actor2', actor_2_name, 'actor3', actor_3_name),
+    jsonb_build_object('director', director_name),
+    jsonb_build_object('director', director_name, 'actors', jsonb_build_array(actor_1_name, actor_2_name, actor_3_name))
+    from movie_meta;
+
+drop table if exists movie_j;
+select movie_title, title_year, 
+    array_to_json(string_to_array(genres, '|')) genres_j,
+    jsonb_build_object('director', director_name, 
+                       'actors', jsonb_build_array(actor_1_name, actor_2_name, actor_3_name)) info
+    into movie_j
+    from movie_meta;
+
+select * from movie_j;
+
+select * from movie_meta;
+
+select genres, 
+    string_to_array(genres, '|'),
+    array_to_json(string_to_array(genres, '|')) 
+    from movie_meta;
+
+-- adv
+select movie_title, actor_1_name, actor_2_name, actor_3_name, 
+    jsonb_build_array(actor_1_name,actor_2_name,actor_3_name) actors_a,
+    jsonb_build_object('actor1', actor_1_name, 'actor2', actor_2_name, 'actor3', actor_3_name) actors_j,
+    jsonb_build_object('director', director_name, 'actors', jsonb_build_array(actor_1_name,actor_2_name,actor_3_name)) info,
+    jsonb_build_array(
+        jsonb_build_object('actor', actor_1_name, 'likes', actor_1_facebook_likes),
+        jsonb_build_object('actor', actor_2_name, 'likes', actor_2_facebook_likes),
+        jsonb_build_object('actor', actor_3_name, 'likes', actor_3_facebook_likes)
+    ) actor_info    
+    from movie_meta;

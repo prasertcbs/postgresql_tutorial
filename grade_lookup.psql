@@ -1,0 +1,83 @@
+-- สอน PostgreSQL: การ lookup ค่าเป็นช่วงเหมือน VLOOKUP แบบ Approximate match ของ Excel
+-- how to mimic Excel Vlookup (approximate match) in PostgreSQL
+-- https://youtu.be/NUW8SyqQhWA
+-- Author: Prasert Kanawattanachai
+-- email: prasert.k@chula.ac.th
+
+-- generate test data
+SELECT 
+    s student_id, floor(random() * (100-40+1) + 40)::numeric(5,2) score, NULL::varchar(2) grade
+    FROM generate_series(1,30) AS s;
+
+drop table if exists scores;
+
+SELECT 
+    s student_id, floor(random() * (100-40+1) + 40)::numeric(5,2) score, NULL::varchar(2) grade
+	into scores
+    FROM generate_series(1,30) AS s;
+
+select * from scores;
+
+-- use case...end and numrange to lookup value in range
+select student_id, score,
+    case
+        when '[85,)'::numrange @> score   then 'A'
+        when '[75,85)'::numrange @> score then 'B'
+        when '[65,75)'::numrange @> score then 'C'
+        when '[50,65)'::numrange @> score then 'D'
+        when '[0,50)'::numrange  @> score then 'F'
+    end grade
+	from scores;
+
+-- update grade letter to table
+update scores
+    set grade=case
+        when '[85,)'::numrange @> score   then 'A'
+        when '[75,85)'::numrange @> score then 'B'
+        when '[65,75)'::numrange @> score then 'C'
+        when '[50,65)'::numrange @> score then 'D'
+        when '[0,50)'::numrange  @> score then 'F'
+    end;
+
+select * from scores;
+
+-- create grade_lookup table & data
+drop table if exists grade_lookup;
+
+CREATE TABLE grade_lookup (
+    grade character varying(2) NOT NULL,
+    score_range numrange
+);
+
+
+INSERT INTO grade_lookup VALUES ('A', '[85,)');
+INSERT INTO grade_lookup VALUES ('B', '[75,85)');
+INSERT INTO grade_lookup VALUES ('C', '[65,75)');
+INSERT INTO grade_lookup VALUES ('D', '[50,65)');
+INSERT INTO grade_lookup VALUES ('F', '[0,50)');
+
+select * from grade_lookup;
+
+-- basic cross join
+select student_id, score, g.grade 
+	from scores s cross join grade_lookup g order by student_id;
+	
+-- vlookup	(range lookup) using cross join and filter
+select student_id, score, g.grade 
+	from scores s cross join grade_lookup g where g.score_range @> s.score
+	order by student_id;
+
+select * from scores;
+
+update scores set grade=NULL;
+
+-- update grade column
+with t as (
+    select student_id, score, g.grade 
+	    from scores s cross join grade_lookup g where g.score_range @> s.score
+)
+update scores
+    set grade=t.grade
+    from t where scores.student_id=t.student_id;
+
+select * from scores order by student_id;
