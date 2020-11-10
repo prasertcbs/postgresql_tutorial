@@ -1,7 +1,24 @@
 -- topic: create scalar function
--- database: saturn
--- table: employee
+-- YouTube: https://youtu.be/YC5OevEFfRw
+-- author: Prasert Kanawattanachai
+-- email: prasert.k@chula.ac.th
 
+-- generate test data
+drop table if exists employee cascade;
+
+with t as (
+SELECT s emp_id, 
+    floor(random() * (90 - 45 + 1) + 45)::real as weight_kg, -- random between 45-90 kg
+    (floor(random() * (190 - 145 + 1) + 145) / 100)::real as height_m -- random between 1.45-1.90 m
+    FROM generate_series(1, 5) s
+)
+select *
+    into employee
+    from t;
+    
+select * from employee;
+
+-- drop existing functions
 drop function if exists bmi;
 drop function if exists rectangle;
 drop function if exists square;
@@ -13,19 +30,17 @@ create or replace function bmi(h real, w real) returns real language 'plpgsql' a
 begin
     return w / (h * h);
 end;
-$$
+$$;
 
-select bmi(1.7, 70);
+select bmi(1.7, 70.0);
 select *, bmi(height_m, weight_kg) body_mass_index from employee;
-select name, weight_kg, height_m, bmi(height_m, weight_kg) body_mass_index from employee;
-
-drop function if exsits bmi;
+select emp_id, weight_kg, height_m, bmi(height_m, weight_kg) body_mass_index from employee;
 
 create or replace function rectangle(h real, w real) returns real language 'plpgsql' as $$
 begin
     return w * h;
 end;
-$$
+$$;
 
 select rectangle(5, 10);
 
@@ -34,7 +49,7 @@ create or replace function square(s real) returns real language 'plpgsql' as $$
 begin
     return rectangle(s, s);
 end;
-$$
+$$;
 
 select square(5);
 
@@ -45,6 +60,6 @@ begin
     circle_area := pi() * r ^ 2;
     return circle_area * h;
 end;
-$$
+$$;
 
 select cylinder(1, 10);
