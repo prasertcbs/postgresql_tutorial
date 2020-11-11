@@ -115,7 +115,7 @@ ALTER TABLE customer
 -- 2nd-5th character: 0-9
 ALTER TABLE customer DROP CONSTRAINT if exists customer_zipcode_ck;
 ALTER TABLE customer
-    ADD CONSTRAINT customer_zipcode_ck CHECK (zipcode ~* '[1-9]\d{4}');
+    ADD CONSTRAINT customer_zipcode_ck CHECK (zipcode ~* '^[1-9]\d{4}$');
 
 -- fname contains at least 2 characters
 ALTER TABLE customer DROP CONSTRAINT if exists customer_fname_ck;
