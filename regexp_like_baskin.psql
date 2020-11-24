@@ -1,0 +1,91 @@
+-- topic: regular expression
+-- doc: https://www.postgresql.org/docs/12/functions-matching.html
+-- create basin31 table script: https://github.com/prasertcbs/postgresql/blob/master/baskin.sql
+-- sql script: 
+-- Author: Prasert Kanawattanachai
+-- email: prasert.k@chula.ac.th
+
+
+select * from baskin;
+
+-- case sensitive match
+select menu from baskin where menu like '%lemon%';
+select menu from baskin where menu ~ 'lemon';
+
+-- case insensitive match
+select menu from baskin where menu ilike '%lemon%';
+select menu from baskin where menu ~* 'lemon';
+
+-- ! operator: not ilike
+select menu from baskin where menu !~* 'lemon';
+
+-- | or
+select menu from baskin where menu ~* 'lemon|lime|mango';
+select menu from baskin where menu ilike '%lemon%' or menu ilike '%lime%' or menu ilike '%mango%';
+
+select menu from baskin where menu ~* 'lemon|lime';
+select menu from baskin where menu ~* '\mlemon\M|lime';
+select menu from baskin where menu ~* '\mlemon\M|lime' and menu ~* 'sugar';
+
+-- and
+select menu from baskin where menu ~* 'no sugar';
+select menu from baskin where menu ~* 'sundae.*no sugar';
+select menu from baskin where menu ~* 'no sugar.*sundae';
+select menu from baskin where menu ~* 'sundae.*no sugar|no sugar.*sundae';
+select menu from baskin where menu ~* 'sundae' and menu ~* 'no sugar';
+
+select menu from baskin where menu ~* 'strawberry' and menu ~* 'cake';
+select menu from baskin where menu ~* 'strawberry' and menu ~* 'cake' and menu !~* 'ice cream';
+
+-- ^ begins with
+select menu from baskin where menu ~* 'cake';
+
+select menu from baskin where menu ~* '^cake';
+
+-- $ ends with
+select menu from baskin where menu ~* 'cake$';
+
+-- \m matches only at the beginning of a word
+select menu from baskin where menu ~* '\mcake';
+
+select menu from baskin where menu ~* '\mlemon\M';
+
+-- \M matches only at the beginning of a word
+select menu from baskin where menu ~* 'cake\M';
+
+-- \y matches only at the beginning or end of a word
+select menu from baskin where menu ~* '\ycake';
+
+-- *, +, ?, {m}, {m, n}, {m,}
+select menu from baskin where menu ~* 'cappuccino';
+
+select menu from baskin where menu ~* 'cap{1,2}uc{1,2}ino';
+
+select menu from baskin where menu ~* 'cap+uc+ino';
+select menu from baskin where menu ~* 'cap{1,}uc{1,}ino';
+
+select menu from baskin where menu ~* 'cap*uc*ino';
+select menu from baskin where menu ~* 'cap{0,}uc{0,}ino';
+
+select menu from baskin where menu ~* 'cap?uc?ino';
+select menu from baskin where menu ~* 'cap{0,1}uc{0,1}ino';
+
+-- [] match one of a set of characters
+select menu from baskin where menu ~* 'icecream';
+select menu from baskin where menu ~* 'ice cream';
+select menu from baskin where menu ~* 'ice-cream';
+select menu from baskin where menu ~* 'ice[ -]?cream';
+
+-- . any character
+select menu from baskin where menu ~* 'strawberry';
+select menu from baskin where menu ~* 'strawberry.{0,}cake';
+select menu from baskin where menu ~* 'strawberry.*cake';
+select menu from baskin where menu ~* 'strawberry.*\d';
+
+select menu from baskin where menu ~* 'M.M';
+select menu from baskin where menu ~* '\.';
+
+-- \d for digit
+select menu from baskin where menu ~* '\d';
+select menu from baskin where menu ~* '\d{2}';
+select menu from baskin where menu ~* '\d+\.\d+';
