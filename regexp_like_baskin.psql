@@ -1,31 +1,29 @@
 -- topic: regular expression
 -- doc: https://www.postgresql.org/docs/12/functions-matching.html
 -- create basin31 table script: https://github.com/prasertcbs/postgresql/blob/master/baskin.sql
--- sql script: 
+-- sql script: https://github.com/prasertcbs/postgresql_tutorial/blob/main/regexp_like_baskin.psql
 -- Author: Prasert Kanawattanachai
 -- email: prasert.k@chula.ac.th
 
 
 select * from baskin;
 
--- case sensitive match
+-- ~ case sensitive match
 select menu from baskin where menu like '%lemon%';
 select menu from baskin where menu ~ 'lemon';
 
--- case insensitive match
+-- ~* case insensitive match
 select menu from baskin where menu ilike '%lemon%';
 select menu from baskin where menu ~* 'lemon';
 
--- ! operator: not ilike
+-- !~* operator: not ilike
 select menu from baskin where menu !~* 'lemon';
 
 -- | or
 select menu from baskin where menu ~* 'lemon|lime|mango';
 select menu from baskin where menu ilike '%lemon%' or menu ilike '%lime%' or menu ilike '%mango%';
 
-select menu from baskin where menu ~* 'lemon|lime';
-select menu from baskin where menu ~* '\mlemon\M|lime';
-select menu from baskin where menu ~* '\mlemon\M|lime' and menu ~* 'sugar';
+
 
 -- and
 select menu from baskin where menu ~* 'no sugar';
@@ -37,9 +35,10 @@ select menu from baskin where menu ~* 'sundae' and menu ~* 'no sugar';
 select menu from baskin where menu ~* 'strawberry' and menu ~* 'cake';
 select menu from baskin where menu ~* 'strawberry' and menu ~* 'cake' and menu !~* 'ice cream';
 
--- ^ begins with
+-- contains
 select menu from baskin where menu ~* 'cake';
 
+-- ^ begins with
 select menu from baskin where menu ~* '^cake';
 
 -- $ ends with
@@ -48,13 +47,19 @@ select menu from baskin where menu ~* 'cake$';
 -- \m matches only at the beginning of a word
 select menu from baskin where menu ~* '\mcake';
 
-select menu from baskin where menu ~* '\mlemon\M';
 
 -- \M matches only at the beginning of a word
 select menu from baskin where menu ~* 'cake\M';
 
+select menu from baskin where menu ~* '\mcake\M';
+
 -- \y matches only at the beginning or end of a word
 select menu from baskin where menu ~* '\ycake';
+
+select menu from baskin where menu ~* 'lemon|lime';
+select menu from baskin where menu ~* '\mlemon\M|lime';
+select menu from baskin where menu ~* '\mlemon\M|lime' and menu ~* 'sugar';
+
 
 -- *, +, ?, {m}, {m, n}, {m,}
 select menu from baskin where menu ~* 'cappuccino';
@@ -89,3 +94,9 @@ select menu from baskin where menu ~* '\.';
 select menu from baskin where menu ~* '\d';
 select menu from baskin where menu ~* '\d{2}';
 select menu from baskin where menu ~* '\d+\.\d+';
+
+select menu, serving_size from baskin where serving_size ~* '\d+ *g';
+select menu, serving_size from baskin where serving_size ~* '\d{3} *g';
+select menu, serving_size from baskin where serving_size ~* '\d{2,3} *g';
+select menu, serving_size from baskin where serving_size ~* '1\d{2} *g';
+select menu, serving_size from baskin where serving_size ~* '1\d{2} *g';
