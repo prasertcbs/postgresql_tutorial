@@ -1,6 +1,7 @@
--- topic: regular expression
+-- topic: การใช้ regular expression ในการค้นหาข้อมูล
+-- YouTube: https://youtu.be/djIWplui5RI
 -- doc: https://www.postgresql.org/docs/12/functions-matching.html
--- create basin31 table script: https://github.com/prasertcbs/postgresql/blob/master/baskin.sql
+-- create baskin table script: https://github.com/prasertcbs/postgresql/blob/master/baskin.sql
 -- sql script: https://github.com/prasertcbs/postgresql_tutorial/blob/main/regexp_like_baskin.psql
 -- Author: Prasert Kanawattanachai
 -- email: prasert.k@chula.ac.th
@@ -10,7 +11,8 @@ select * from baskin;
 
 -- ~ case sensitive match
 select menu from baskin where menu like '%lemon%';
-select menu from baskin where menu ~ 'lemon';
+select menu from baskin where menu like '%Lemon%';
+select menu from baskin where menu ~ 'Lemon';
 
 -- ~* case insensitive match
 select menu from baskin where menu ilike '%lemon%';
@@ -23,14 +25,12 @@ select menu from baskin where menu !~* 'lemon';
 select menu from baskin where menu ~* 'lemon|lime|mango';
 select menu from baskin where menu ilike '%lemon%' or menu ilike '%lime%' or menu ilike '%mango%';
 
-
-
 -- and
 select menu from baskin where menu ~* 'no sugar';
+select menu from baskin where menu ~* 'sundae' and menu ~* 'no sugar';
 select menu from baskin where menu ~* 'sundae.*no sugar';
 select menu from baskin where menu ~* 'no sugar.*sundae';
 select menu from baskin where menu ~* 'sundae.*no sugar|no sugar.*sundae';
-select menu from baskin where menu ~* 'sundae' and menu ~* 'no sugar';
 
 select menu from baskin where menu ~* 'strawberry' and menu ~* 'cake';
 select menu from baskin where menu ~* 'strawberry' and menu ~* 'cake' and menu !~* 'ice cream';
@@ -45,6 +45,7 @@ select menu from baskin where menu ~* '^cake';
 select menu from baskin where menu ~* 'cake$';
 
 -- \m matches only at the beginning of a word
+select menu from baskin where menu ~* 'cake';
 select menu from baskin where menu ~* '\mcake';
 
 
@@ -63,6 +64,7 @@ select menu from baskin where menu ~* '\mlemon\M|lime' and menu ~* 'sugar';
 
 -- *, +, ?, {m}, {m, n}, {m,}
 select menu from baskin where menu ~* 'cappuccino';
+select menu from baskin where menu ~* 'capuccino';
 
 select menu from baskin where menu ~* 'cap{1,2}uc{1,2}ino';
 
@@ -76,10 +78,16 @@ select menu from baskin where menu ~* 'cap?uc?ino';
 select menu from baskin where menu ~* 'cap{0,1}uc{0,1}ino';
 
 -- [] match one of a set of characters
+select menu from baskin where menu ~* '[qx]';
+select menu from baskin where menu ~* '[89]';
+select menu from baskin where menu ~* '[1-5]';
+select menu from baskin where menu ~* '[0-9qx]';
+
 select menu from baskin where menu ~* 'icecream';
 select menu from baskin where menu ~* 'ice cream';
 select menu from baskin where menu ~* 'ice-cream';
 select menu from baskin where menu ~* 'ice[ -]?cream';
+select menu from baskin where menu ~* 'ice[ -]{0,1}cream';
 
 -- . any character
 select menu from baskin where menu ~* 'strawberry';
@@ -89,14 +97,80 @@ select menu from baskin where menu ~* 'strawberry.*\d';
 
 select menu from baskin where menu ~* 'M.M';
 select menu from baskin where menu ~* '\.';
+select menu from baskin where menu ~* '.';
 
 -- \d for digit
 select menu from baskin where menu ~* '\d';
+select menu from baskin where menu ~* '[0-9]';
 select menu from baskin where menu ~* '\d{2}';
 select menu from baskin where menu ~* '\d+\.\d+';
 
+select menu, serving_size from baskin;
 select menu, serving_size from baskin where serving_size ~* '\d+ *g';
 select menu, serving_size from baskin where serving_size ~* '\d{3} *g';
 select menu, serving_size from baskin where serving_size ~* '\d{2,3} *g';
+select menu, serving_size from baskin where serving_size ~* '\d{2,} *g';
 select menu, serving_size from baskin where serving_size ~* '1\d{2} *g';
-select menu, serving_size from baskin where serving_size ~* '1\d{2} *g';
+select menu, serving_size from baskin where serving_size ~* '1\d *g';
+select menu, serving_size from baskin where serving_size ~* '1\d *g';
+
+-- () grouping
+select menu from baskin where menu ~* '(vanilla|mint|mango)';
+select menu from baskin where menu ~* '^vanilla|^mint|^mango';
+select menu from baskin where menu ~* '^(vanilla|mint|mango)';
+
+select menu from baskin where menu ~* 'yogurt';
+select menu from baskin where menu ~* '(vanilla|chocolate)';
+select menu from baskin where menu ~* '(vanilla|chocolate).*yogurt';
+select menu from baskin where menu ~* '(vanilla|chocolate).*(yogurt|cookie)';
+
+-- \w
+select regexp_matches('mocha latte espresso', '\w+', 'g');
+select regexp_matches('#mocha -latte @#$ @espresso 31 tea', '\w+', 'g');
+
+-- \W
+select regexp_matches('#mocha -latte @#$ @espresso 31 tea', '\W+', 'g');
+
+-- greedy vs lazy .* vs. .*?
+select regexp_matches('3+(4*(5/6))', '\(.*\)', 'ig');
+select regexp_matches('(10+3)+(4*(5/6))', '\(.*?\)', 'ig');
+select regexp_matches('(10+3)+(4*5/6)', '\(.*?\)', 'ig');
+select regexp_matches('(10+3)+(4*5/6)', '\((.*?)\)', 'ig');
+
+select regexp_matches('(10+3)+(4*5/6)', '[+\-*/]', 'ig');
+select regexp_matches('(10+3)+(4*5/6)', '(\d+)', 'ig');
+select regexp_matches('(10+3)+(4*5/6)', '(\d+)[+\-*/](\d+)', 'ig');
+
+select '<h1>hello <i>world</i></h1>' ~* '<.*>';
+select regexp_matches('<h1>hello <i>world</i></h1>', '<.*>', 'g');
+select regexp_matches('<h1>hello <i>world</i></h1>', '<.*?>', 'g');
+select regexp_matches('<h1>hello <i>world</i></h1>', '<h1>.*?</h1>', 'ig');
+select regexp_matches('<h1>hello <i>world</i></h1>', '<h1>(.*?)</h1>', 'ig');
+
+-- hashtag
+select regexp_matches('Microosft 365 #word #excel #powerpoint #office', '#\w+', 'ig');
+select regexp_matches('Microosft 365 #word #excel #powerpoint #office', '(#\w+)', 'ig');
+select regexp_matches('Microosft 365 #word #excel #powerpoint #office', '#(\w+)', 'ig');
+
+select regexp_matches('https://www.youtube.com/watch?v=PLpOPD5I45o', 'https://.+', 'ig');
+select regexp_matches('https://www.youtube.com/watch?v=PLpOPD5I45o', 'https://(.+)', 'ig');
+select regexp_matches('https://www.youtube.com/watch?v=PLpOPD5I45o', 'https://(.+)/', 'ig');
+
+-- split
+select regexp_matches('word,excel,powerpoint', '\w+', 'ig');
+select regexp_matches('word, excel, powerpoint', '\w+', 'ig');
+select regexp_matches('word , excel   , powerpoint', '\w+', 'ig');
+select regexp_matches('word , excel   , powerpoint', '\w+', 'ig');
+
+select regexp_matches('weight from 10 to 20 kg.; height from 1.2 to 1.7 m.', '\m\d+\M', 'ig');
+select regexp_matches('weight from 10 to 20 kg.; height from 1.2 to 1.7 m.', '\m\d+\.?\d+\M', 'ig');
+select regexp_matches('weight from 10-20 kg.; height from 1.2 to 1.7 m.', '\m\d+\.?\d+\M', 'ig');
+select regexp_matches('weight from 10 to 20 kg. 9am', '\m\d+\M', 'ig');
+
+with t as (
+    select regexp_matches('word , excel   , powerpoint', '\w+', 'ig') txt_a
+),
+t2 as (
+    select txt_a[1] txt from t
+)
+select txt, length(txt) from t2;
